@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -67,7 +68,7 @@ public class DictionaryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
+        final View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +76,24 @@ public class DictionaryFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), AddNewEntryActivity.class);
                 startActivityForResult(intent, ADD_NEW_ENTRY_ACTIVITY);
+            }
+        });
+
+        Button btnDailyTraining = view.findViewById(R.id.btnDailyTraining);
+        Button btnBrowse = view.findViewById(R.id.btnBrowse);
+
+        btnDailyTraining.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnBrowse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BrowseActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -1,19 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccountFragment">
 
+    <ImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:text="Vu Hoang Thai Duong"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivAvatar" />
+
+    <ImageView
+        android:id="@+id/ivInfo1"
+        android:layout_width="35dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Info 1"
+        android:srcCompat="@drawable/ic_baseline_edit_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+        tools:srcCompat="@drawable/ic_baseline_edit_24" />
+
+    <ImageView
+        android:id="@+id/ivInfo2"
+        android:layout_width="35dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Info 2"
+        android:srcCompat="@drawable/ic_baseline_edit_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivInfo1"
+        tools:srcCompat="@drawable/ic_baseline_edit_24" />
+
+    <ImageView
+        android:id="@+id/ivInfo3"
+        android:layout_width="35dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Info 3"
+        android:srcCompat="@drawable/ic_baseline_edit_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivInfo2"
+        tools:srcCompat="@drawable/ic_baseline_edit_24" />
+
     <Button
         android:id="@+id/goToAccountSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="@color/colorPrimary"
         android:text="GO TO ACCOUNT SETTINGS"
         android:textColor="@color/colorIcon"
-        android:textStyle="bold" />
-</FrameLayout>
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivInfo3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
