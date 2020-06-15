@@ -35,7 +35,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://google.com.vn"));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/vuhoangthaiduong"));
                 startActivity(intent);
             }
         });

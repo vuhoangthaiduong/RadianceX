@@ -11,5 +11,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_share">Share</string>
     <string name="save_entry">Save</string>
+    <string name="daily_training">Daily Training</string>
+    <string name="browse">Browse</string>
 
 </resources>

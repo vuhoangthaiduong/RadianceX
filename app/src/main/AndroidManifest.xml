@@ -19,6 +19,9 @@
         <activity android:name=".AddNewEntryActivity"
             android:parentActivityName=".MainActivity">
         </activity>
+        <activity android:name=".BrowseActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>
