@@ -9,22 +9,22 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {DictionaryEntry.class}, version = 1, exportSchema = false)
-abstract class DictionaryEntryRoomDatabase extends RoomDatabase {
+@Database(entities = {DiEntry.class}, version = 1, exportSchema = false)
+abstract class DiEntryRoomDatabase extends RoomDatabase {
 
     public abstract DiEntryDao dictionaryEntryDao();
 
-    private static volatile DictionaryEntryRoomDatabase INSTANCE;
+    private static volatile DiEntryRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static DictionaryEntryRoomDatabase getDatabase(final Context context) {
+    static DiEntryRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (DictionaryEntryRoomDatabase.class) {
+            synchronized (DiEntryRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            DictionaryEntryRoomDatabase.class, "word_database")
+                            DiEntryRoomDatabase.class, "word_database")
                             .build();
                 }
             }

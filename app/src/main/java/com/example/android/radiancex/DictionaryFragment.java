@@ -13,7 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.material.snackbar.Snackbar;
 
 /**
@@ -69,18 +70,10 @@ public class DictionaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getActivity(), AddNewEntryActivity.class);
-                startActivityForResult(intent, ADD_NEW_ENTRY_ACTIVITY);
-            }
-        });
 
         Button btnDailyTraining = view.findViewById(R.id.btnDailyTraining);
         Button btnBrowse = view.findViewById(R.id.btnBrowse);
+//        btnBrowse.setVisibility(View.GONE);
 
         btnDailyTraining.setOnClickListener(new View.OnClickListener() {
             @Override

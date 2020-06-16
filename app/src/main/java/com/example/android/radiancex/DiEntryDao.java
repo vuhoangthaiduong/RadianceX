@@ -10,17 +10,17 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface DictionaryEntryDao {
+public interface DiEntryDao {
 
     // allowing the insert of the same word multiple times by passing a
     // conflict resolution strategy
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(DictionaryEntry entry);
+    void insert(DiEntry entry);
 
-    @Query("DELETE FROM DictionaryEntry")
+    @Query("DELETE FROM DiEntry")
     void deleteAll();
 
-    @Query("SELECT * FROM DictionaryEntry")
-    LiveData<List<DictionaryEntry>> getAll();
+    @Query("SELECT * FROM DiEntry")
+    LiveData<List<DiEntry>> getAll();
 
 }

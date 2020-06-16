@@ -3,6 +3,7 @@ package com.example.android.radiancex;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,12 +14,15 @@ public class BrowseActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<DictionaryEntry> myDataset;
+    private ArrayList<DiEntry> myDataset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
+
+        getSupportActionBar().setTitle("Browse");
+
         recyclerView = (RecyclerView) findViewById(R.id.entry_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -47,7 +51,7 @@ public class BrowseActivity extends AppCompatActivity {
             eng = sampleStrings[(int)(Math.random() * 4)];
             mea = sampleStrings[(int)(Math.random() * 4)];
             vie = sampleStrings[(int)(Math.random() * 4)];
-            myDataset.add(new DictionaryEntry(i + "\n" + jpn, i + "\n" + eng, i + "\n" + mea, i + "\n" + vie));
+            myDataset.add(new DiEntry(i + "\n" + jpn, i + "\n" + eng, i + "\n" + mea, i + "\n" + vie));
         }
 
         mAdapter = new EntryRecyclerViewAdapter(myDataset);
