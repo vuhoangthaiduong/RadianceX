@@ -31,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
+        int shortAnimationDuration = getResources().getInteger(
+                android.R.integer.config_shortAnimTime);
+
         floatingActionsMenu = findViewById(R.id.add_content_menu);
         btnNewEntry = findViewById(R.id.action_add_entry);
         btnNewPost = findViewById(R.id.action_new_blog_post);
@@ -94,8 +97,10 @@ public class MainActivity extends AppCompatActivity {
     private void loadFragment(Fragment fragment) {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
 }
