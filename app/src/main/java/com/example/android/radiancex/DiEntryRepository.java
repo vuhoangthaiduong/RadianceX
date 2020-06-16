@@ -6,31 +6,31 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-class DictionaryEntryRepository {
+class DiEntryRepository {
 
-    private DictionaryEntryDao mDictionaryEntryDao;
-    private LiveData<List<DictionaryEntry>> mAllEntries;
+    private DiEntryDao mDictionaryEntryDao;
+    private LiveData<List<DiEntry>> mAllEntries;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
     // See the BasicSample in the android-architecture-components repository at
     // https://github.com/googlesamples
-    DictionaryEntryRepository(Application application) {
-        DictionaryEntryRoomDatabase db = DictionaryEntryRoomDatabase.getDatabase(application);
+    DiEntryRepository(Application application) {
+        DiEntryRoomDatabase db = DiEntryRoomDatabase.getDatabase(application);
         mDictionaryEntryDao = db.dictionaryEntryDao();
         mAllEntries = mDictionaryEntryDao.getAll();
     }
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    LiveData<List<DictionaryEntry>> getAllWords() {
+    LiveData<List<DiEntry>> getAllWords() {
         return mAllEntries;
     }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
-    void insert(final DictionaryEntry entry) {
-        DictionaryEntryRoomDatabase.databaseWriteExecutor.execute(() -> {
+    void insert(final DiEntry entry) {
+        DiEntryRoomDatabase.databaseWriteExecutor.execute(() -> {
             mDictionaryEntryDao.insert(entry);
         });
     }

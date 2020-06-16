@@ -6,8 +6,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "DictionaryEntry")
-public class DictionaryEntry {
+@Entity(tableName = "DiEntry")
+public class DiEntry {
     @PrimaryKey
     @NonNull
     private String sid;
@@ -23,16 +23,16 @@ public class DictionaryEntry {
     private boolean favourite;
 
     @Ignore
-    public DictionaryEntry() {
+    public DiEntry() {
 
     }
 
     @Ignore
-    public DictionaryEntry(String id) {
+    public DiEntry(String id) {
         this.sid = id;
     }
 
-    public DictionaryEntry(String jpn, String eng, String meaning, String vie) {
+    public DiEntry(String jpn, String eng, String meaning, String vie) {
         this.jpn = jpn;
         this.eng = eng;
         this.meaning = meaning;
@@ -53,6 +53,10 @@ public class DictionaryEntry {
 
     public String getEng() {
         return this.eng;
+    }
+
+    public String getMeaning() {
+        return this.meaning;
     }
 
     public boolean isFavourite() {
@@ -78,5 +82,6 @@ public class DictionaryEntry {
     public void setFavourite(boolean favourite) {
         this.favourite = favourite;
     }
+
 
 }

@@ -20,10 +20,10 @@ import java.util.ArrayList;
  */
 public class EntryRecyclerViewAdapter extends RecyclerView.Adapter<EntryRecyclerViewAdapter.EntryViewHolder> {
 
-    private ArrayList<DictionaryEntry> entries;
+    private ArrayList<DiEntry> entries;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public EntryRecyclerViewAdapter(ArrayList<DictionaryEntry> entries) {
+    public EntryRecyclerViewAdapter(ArrayList<DiEntry> entries) {
         this.entries = entries;
     }
 

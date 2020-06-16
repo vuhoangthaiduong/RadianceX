@@ -10,7 +10,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,6 +35,12 @@ public class DictionaryFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FloatingActionButton fab_main, fab1_mail, fab2_share;
+    private Animation fab_open, fab_close, fab_clock, fab_anticlock;
+    TextView textview_mail, textview_share;
+
+    Boolean isOpen = false;
 
     public DictionaryFragment() {
         // Required empty public constructor
@@ -69,18 +78,71 @@ public class DictionaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_dictionary, container, false);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        fab_main = view.findViewById(R.id.fab);
+        fab1_mail = view.findViewById(R.id.fab1);
+        fab2_share = view.findViewById(R.id.fab2);
+        fab_close = AnimationUtils.loadAnimation(this.getContext(), R.anim.fab_close);
+        fab_open = AnimationUtils.loadAnimation(this.getContext(), R.anim.fab_open);
+        fab_clock = AnimationUtils.loadAnimation(this.getContext(), R.anim.fab_rotate_clock);
+        fab_anticlock = AnimationUtils.loadAnimation(this.getContext(), R.anim.fab_rotate_anticlock);
+
+        textview_mail = (TextView) view.findViewById(R.id.textview_mail);
+        textview_share = (TextView) view.findViewById(R.id.textview_share);
+
+//        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getActivity(), AddNewEntryActivity.class);
-                startActivityForResult(intent, ADD_NEW_ENTRY_ACTIVITY);
+                if (isOpen) {
+
+                    textview_mail.setVisibility(View.INVISIBLE);
+                    textview_share.setVisibility(View.INVISIBLE);
+                    fab2_share.startAnimation(fab_close);
+                    fab1_mail.startAnimation(fab_close);
+                    fab_main.startAnimation(fab_anticlock);
+                    fab2_share.setClickable(false);
+                    fab1_mail.setClickable(false);
+                    isOpen = false;
+                } else {
+                    textview_mail.setVisibility(View.VISIBLE);
+                    textview_share.setVisibility(View.VISIBLE);
+                    fab2_share.startAnimation(fab_open);
+                    fab1_mail.startAnimation(fab_open);
+                    fab_main.startAnimation(fab_clock);
+                    fab2_share.setClickable(true);
+                    fab1_mail.setClickable(true);
+                    isOpen = true;
+                }
+
             }
         });
 
+
+        fab2_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getContext(), "Share", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        fab1_mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Email", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+
+
         Button btnDailyTraining = view.findViewById(R.id.btnDailyTraining);
         Button btnBrowse = view.findViewById(R.id.btnBrowse);
+//        btnBrowse.setVisibility(View.GONE);
 
         btnDailyTraining.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +63,9 @@ public class AskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ask, container, false);
+        View view = inflater.inflate(R.layout.fragment_ask, container, false);
+        final FloatingActionsMenu menuMultipleActions = view.findViewById(R.id.multiple_actions);
+        menuMultipleActions.setOnClickListener(v -> Toast.makeText(v.getContext(), "Clicked pink Floating Action Button", Toast.LENGTH_SHORT).show());
+        return view;
     }
 }

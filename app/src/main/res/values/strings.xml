@@ -13,5 +13,13 @@
     <string name="save_entry">Save</string>
     <string name="daily_training">Daily Training</string>
     <string name="browse">Browse</string>
+    <string name="go_to_account_settings">GO TO ACCOUNT SETTINGS</string>
+    <string name="vu_hoang_thai_duong">Vu Hoang Thai Duong</string>
+    <string name="avatar">Avatar</string>
+    <string name="search">Search</string>
+    <string name="add">Add</string>
+    <string name="select_all">Select all</string>
+    <string name="change_display_order">Change display order</string>
+    <string name="email">Email</string>
 
 </resources>
