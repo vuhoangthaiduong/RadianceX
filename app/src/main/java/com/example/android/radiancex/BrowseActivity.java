@@ -20,6 +20,9 @@ public class BrowseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
+
+        getSupportActionBar().setTitle("Browse");
+
         recyclerView = (RecyclerView) findViewById(R.id.entry_recycler_view);
 
         // use this setting to improve performance if you know that changes

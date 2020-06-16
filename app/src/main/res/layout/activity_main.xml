@@ -8,52 +8,108 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/fab_main_activity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="80dp"
-        fab:fab_addButtonColorNormal="@color/colorPrimary"
-        fab:fab_addButtonColorPressed="@color/colorPrimaryDark"
-        fab:fab_addButtonPlusIconColor="@color/colorIcon"
-        fab:fab_labelStyle="@style/menu_labels_style"
-        fab:layout_constraintBottom_toBottomOf="parent"
-        fab:layout_constraintEnd_toEndOf="parent"
-        fab:layout_constraintRight_toRightOf="parent">
+    <!--    <com.getbase.floatingactionbutton.FloatingActionsMenu-->
+    <!--        android:id="@+id/fab_main_activity"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginEnd="8dp"-->
+    <!--        android:layout_marginRight="8dp"-->
+    <!--        android:layout_marginBottom="80dp"-->
+    <!--        fab:fab_addButtonColorNormal="@color/colorPrimary"-->
+    <!--        fab:fab_addButtonColorPressed="@color/colorPrimaryDark"-->
+    <!--        fab:fab_addButtonPlusIconColor="@color/colorIcon"-->
+    <!--        fab:fab_labelStyle="@style/menu_labels_style"-->
+    <!--        fab:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        fab:layout_constraintEnd_toEndOf="parent"-->
+    <!--        fab:layout_constraintRight_toRightOf="parent">-->
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_fab_new_entry"
-            android:layout_width="wrap_content"
+    <!--        <com.getbase.floatingactionbutton.FloatingActionButton-->
+    <!--            android:id="@+id/btn_fab_new_entry"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            fab:fab_colorNormal="@color/pink"-->
+    <!--            fab:fab_colorPressed="@color/pink_pressed"-->
+    <!--            fab:fab_icon="@drawable/ic_baseline_view_list_24"-->
+    <!--            fab:fab_size="mini"-->
+    <!--            fab:fab_title="Edit" />-->
+
+    <!--        <com.getbase.floatingactionbutton.FloatingActionButton-->
+    <!--            android:id="@+id/btn_fab_new_question"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            fab:fab_colorNormal="@color/pink"-->
+    <!--            fab:fab_colorPressed="@color/pink_pressed"-->
+    <!--            fab:fab_icon="@drawable/ic_baseline_question_answer_24"-->
+    <!--            fab:fab_size="mini"-->
+    <!--            fab:fab_title="Question" />-->
+
+    <!--        <com.getbase.floatingactionbutton.FloatingActionButton-->
+    <!--            android:id="@+id/btn_fab_new_post"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            fab:fab_colorNormal="@color/pink"-->
+    <!--            fab:fab_colorPressed="@color/pink_pressed"-->
+    <!--            fab:fab_icon="@drawable/ic_baseline_amp_stories_24"-->
+    <!--            fab:fab_size="mini"-->
+    <!--            fab:fab_title="Post" />-->
+
+    <!--    </com.getbase.floatingactionbutton.FloatingActionsMenu>-->
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/add_content_menu"
+            android:layout_width="421dp"
             android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/pink"
-            fab:fab_colorPressed="@color/pink_pressed"
-            fab:fab_icon="@drawable/ic_baseline_view_list_24"
-            fab:fab_size="mini"
-            fab:fab_title="Edit" />
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="80dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            fab:fab_addButtonColorNormal="@color/pink"
+            fab:fab_addButtonColorPressed="@color/pink_pressed"
+            fab:fab_icon="@drawable/ic_baseline_add_24"
+            fab:fab_labelStyle="@style/menu_labels_style"
+            fab:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_fab_new_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/pink"
-            fab:fab_colorPressed="@color/pink_pressed"
-            fab:fab_icon="@drawable/ic_baseline_question_answer_24"
-            fab:fab_size="mini"
-            fab:fab_title="Question" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_add_entry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/new_entry"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorPressed="@color/pink_pressed"
+                fab:fab_icon="@drawable/ic_baseline_view_list_24_white"
+                fab:fab_size="mini"
+                fab:fab_title="@string/new_entry" />
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btn_fab_new_post"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/pink"
-            fab:fab_colorPressed="@color/pink_pressed"
-            fab:fab_icon="@drawable/ic_baseline_amp_stories_24"
-            fab:fab_size="mini"
-            fab:fab_title="Post" />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_new_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/ask_a_question"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorPressed="@color/pink_pressed"
+                fab:fab_icon="@drawable/ic_baseline_question_answer_24_white"
+                fab:fab_size="mini"
+                fab:fab_title="@string/ask_a_question" />
 
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/action_new_blog_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/new_blog_post"
+                fab:fab_colorNormal="@color/pink"
+                fab:fab_colorPressed="@color/pink_pressed"
+                fab:fab_icon="@drawable/ic_baseline_amp_stories_24_white"
+                fab:fab_size="mini"
+                fab:fab_title="@string/new_blog_post" />
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -68,6 +124,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

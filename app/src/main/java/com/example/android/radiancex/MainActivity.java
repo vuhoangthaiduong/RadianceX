@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -32,20 +31,20 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-        floatingActionsMenu = findViewById(R.id.fab_main_activity);
-        btnNewEntry = findViewById(R.id.btn_fab_new_entry);
-        btnNewPost = findViewById(R.id.btn_fab_new_post);
-        btnNewQuestion = findViewById(R.id.btn_fab_new_question);
+        floatingActionsMenu = findViewById(R.id.add_content_menu);
+        btnNewEntry = findViewById(R.id.action_add_entry);
+        btnNewPost = findViewById(R.id.action_new_blog_post);
+        btnNewQuestion = findViewById(R.id.action_new_question);
 
         btnNewEntry.setOnClickListener(v -> {
-            Intent intent = new Intent(this, BrowseActivity.class);
+            Intent intent = new Intent(this, AddNewEntryActivity.class);
             startActivity(intent);
         });
         btnNewQuestion.setOnClickListener(v -> {
-            Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show();
         });
         btnNewPost.setOnClickListener(v -> {
-            Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show();
         });
 
 
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
                 case R.id.action_ask:
+                    floatingActionsMenu.setVisibility(View.VISIBLE);
                     fragment = new AskFragment();
                     loadFragment(fragment);
                     return true;
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                     loadFragment(fragment);
                     return true;
                 case R.id.action_inbox:
-                    floatingActionsMenu.setVisibility(View.VISIBLE);
                     floatingActionsMenu.setVisibility(View.GONE);
                     fragment = new InboxFragment();
                     loadFragment(fragment);

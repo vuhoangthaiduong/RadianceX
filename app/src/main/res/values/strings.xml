@@ -5,7 +5,6 @@
     <string name="blog">Blog</string>
     <string name="inbox">Inbox</string>
     <string name="account">Account</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_add_favourite">Add to favourite</string>
     <string name="action_delete">Delete</string>
@@ -21,5 +20,8 @@
     <string name="select_all">Select all</string>
     <string name="change_display_order">Change display order</string>
     <string name="email">Email</string>
+    <string name="new_entry">New Entry</string>
+    <string name="ask_a_question">Ask a question</string>
+    <string name="new_blog_post">New blog post</string>
 
 </resources>
