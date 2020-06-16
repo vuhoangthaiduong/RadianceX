@@ -6,11 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".AccountFragment">
 
+    <TextView
+        android:id="@+id/tvScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/account"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/ivAvatar"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:contentDescription="@string/avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -31,41 +43,41 @@
 
     <ImageView
         android:id="@+id/ivInfo1"
-        android:layout_width="35dp"
-        android:layout_height="42dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="16dp"
         android:contentDescription="Info 1"
-        app:srcCompat="@drawable/ic_baseline_edit_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+        app:srcCompat="@drawable/ic_baseline_edit_24"
         tools:srcCompat="@drawable/ic_baseline_edit_24" />
 
     <ImageView
         android:id="@+id/ivInfo2"
-        android:layout_width="35dp"
-        android:layout_height="42dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
         android:contentDescription="Info 2"
-        app:srcCompat="@drawable/ic_baseline_edit_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivInfo1"
+        app:srcCompat="@drawable/ic_baseline_edit_24"
         tools:srcCompat="@drawable/ic_baseline_edit_24" />
 
     <ImageView
         android:id="@+id/ivInfo3"
-        android:layout_width="35dp"
-        android:layout_height="42dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
         android:contentDescription="Info 3"
-        app:srcCompat="@drawable/ic_baseline_edit_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivInfo2"
+        app:srcCompat="@drawable/ic_baseline_edit_24"
         tools:srcCompat="@drawable/ic_baseline_edit_24" />
 
     <Button

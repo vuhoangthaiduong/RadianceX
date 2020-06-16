@@ -64,8 +64,6 @@ public class AskFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ask, container, false);
-        final FloatingActionsMenu menuMultipleActions = view.findViewById(R.id.multiple_actions);
-        menuMultipleActions.setOnClickListener(v -> Toast.makeText(v.getContext(), "Clicked pink Floating Action Button", Toast.LENGTH_SHORT).show());
         return view;
     }
 }
