@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton btnNewEntry;
     private FloatingActionButton btnNewQuestion;
     private FloatingActionButton btnNewPost;
+    private TextView tvScreenname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getSupportActionBar().hide();
-
-        int shortAnimationDuration = getResources().getInteger(
-                android.R.integer.config_shortAnimTime);
+        
+        tvScreenname = findViewById(R.id.tvScreenName);
 
         floatingActionsMenu = findViewById(R.id.add_content_menu);
         btnNewEntry = findViewById(R.id.action_add_entry);
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadFragment(new DictionaryFragment());
+        tvScreenname.setText(R.string.dictionary);
 
     }
 
@@ -67,26 +69,31 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_dictionary:
                     floatingActionsMenu.setVisibility(View.VISIBLE);
                     fragment = new DictionaryFragment();
+                    tvScreenname.setText(R.string.dictionary);
                     loadFragment(fragment);
                     return true;
                 case R.id.action_ask:
                     floatingActionsMenu.setVisibility(View.VISIBLE);
                     fragment = new AskFragment();
+                    tvScreenname.setText(R.string.ask);
                     loadFragment(fragment);
                     return true;
                 case R.id.action_blog:
                     floatingActionsMenu.setVisibility(View.VISIBLE);
                     fragment = new BlogFragment();
+                    tvScreenname.setText(R.string.blog);
                     loadFragment(fragment);
                     return true;
                 case R.id.action_inbox:
                     floatingActionsMenu.setVisibility(View.GONE);
                     fragment = new InboxFragment();
+                    tvScreenname.setText(R.string.inbox);
                     loadFragment(fragment);
                     return true;
                 case R.id.action_account:
                     floatingActionsMenu.setVisibility(View.GONE);
                     fragment = new AccountFragment();
+                    tvScreenname.setText(R.string.account);
                     loadFragment(fragment);
                     return true;
             }

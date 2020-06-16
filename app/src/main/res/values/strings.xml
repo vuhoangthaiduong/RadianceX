@@ -23,5 +23,9 @@
     <string name="new_entry">New Entry</string>
     <string name="ask_a_question">Ask a question</string>
     <string name="new_blog_post">New blog post</string>
+    <string name="coming_soon">Coming soon!</string>
+    <string name="load_file">Load file</string>
+    <string name="entry_id">Entry ID</string>
+    <string name="next">Next</string>
 
 </resources>
