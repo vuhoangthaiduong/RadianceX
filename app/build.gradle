@@ -9,6 +9,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
@@ -41,8 +42,11 @@ dependencies {
     //RFAB
     implementation 'com.getbase:floatingactionbutton:1.10.1'
     //POI
-//    implementation 'org.apache.poi:poi:4.1.2'
-//    implementation "org.apache.poi:poi-ooxml:4.1.2"
+//    implementation 'org.apache.poi:poi:3.12'
+//    implementation "org.apache.poi:poi-ooxml:3.12"
+    implementation files('libs/poishadow-all.jar')
+    //Multidex
+    implementation 'com.android.support:multidex:1.0.3'
 
 
     testImplementation 'junit:junit:4.12'

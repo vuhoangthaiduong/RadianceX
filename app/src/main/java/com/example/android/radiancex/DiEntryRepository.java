@@ -8,7 +8,7 @@ import java.util.List;
 
 class DiEntryRepository {
 
-    private DiEntryDao mDictionaryEntryDao;
+    private DiEntryDao mDiEntryDao;
     private LiveData<List<DiEntry>> mAllEntries;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
@@ -17,21 +17,25 @@ class DiEntryRepository {
     // https://github.com/googlesamples
     DiEntryRepository(Application application) {
         DiEntryRoomDatabase db = DiEntryRoomDatabase.getDatabase(application);
-        mDictionaryEntryDao = db.dictionaryEntryDao();
-        mAllEntries = mDictionaryEntryDao.getAll();
+        mDiEntryDao = db.dictionaryEntryDao();
+        mAllEntries = mDiEntryDao.getAll();
     }
 
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    LiveData<List<DiEntry>> getAllWords() {
+    LiveData<List<DiEntry>> getAllEntries() {
         return mAllEntries;
+    }
+
+    void deleteAllEntries(){
+        mDiEntryDao.deleteAll();
     }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(final DiEntry entry) {
         DiEntryRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mDictionaryEntryDao.insert(entry);
+            mDiEntryDao.insert(entry);
         });
     }
 }

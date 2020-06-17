@@ -78,7 +78,9 @@ public class DictionaryFragment extends Fragment {
         btnDailyTraining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(v.getContext(), "Coming soon!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), DailyTrainingActivity.class);
+                startActivity(intent);
             }
         });
 

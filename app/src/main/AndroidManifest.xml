@@ -22,6 +22,9 @@
         <activity android:name=".BrowseActivity"
             android:parentActivityName=".MainActivity">
         </activity>
+        <activity android:name=".DailyTrainingActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
     </application>
 
 </manifest>
