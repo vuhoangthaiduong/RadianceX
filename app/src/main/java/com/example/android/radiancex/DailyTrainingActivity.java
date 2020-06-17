@@ -1,23 +1,28 @@
 package com.example.android.radiancex;
 
-import android.content.res.AssetManager;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +42,15 @@ public class DailyTrainingActivity extends AppCompatActivity {
 
     DiEntryViewModel mDiEntryViewModel;
 
-    private ArrayList<DiEntry> fullList = new ArrayList<>();
-    private ArrayList<DiEntry> shortList;
+    private ArrayList<DiEntry> currentDeck;
     private DiEntry currentSentence;
+    private int entryCount;
+
+    final int DECK_SIZE = 20;
+    final int ID_FIELD_CODE = 0;
+    final int JAPANESE_FIELD_CODE = 1;
+    final int VIETNAMESE_FIELD_CODE = 2;
+    final int NOTE_FIELD_CODE = 3;
 
 
     static {
@@ -74,111 +85,154 @@ public class DailyTrainingActivity extends AppCompatActivity {
         switchShowTranslation = findViewById(R.id.showTranslationSwitch);
         switchShowHint = findViewById(R.id.showHintSwitch);
 
+        mDiEntryViewModel = new ViewModelProvider(this).get(DiEntryViewModel.class);
+
+//        entryCount = mDiEntryViewModel.getNumberOfEntries();
+
+//        initializeData();
+
 //        mDiEntryViewModel.getAllEntries().observe(this, new Observer<List<DiEntry>>() {
 //            @Override
 //            public void onChanged(@Nullable final List<DiEntry> sentences) {
 //                // Update the cached copy of the sentences in the adapter.
-//                totalNumberOfCards.setText((int) (mDiEntryViewModel.getAllEntries().getValue().size()) + "");
+//                entryCount = mDiEntryViewModel.getAllEntriesSynchronous().size();
+//                totalNumberOfCards.setText(entryCount);
 //            }
 //        });
 
         btnLoadFile.setOnClickListener(v -> {
-            if (fullList.isEmpty()) {
-                readExcelFileFromAssets();
-                getNewCollection();
-                goToNextWord();
-            }
-            totalNumberOfCards.setText(fullList.size() + "");
+            Log.d("a------------------", "yay");
+            new ProcessPopulateDatabaseInBackground().execute();
+//            totalNumberOfCards.setText(entryCount);
             btnLoadFile.setEnabled(false);
             btnGetNewCollection.setEnabled(true);
             btnNextWord.setEnabled(true);
         });
 
-        btnGetNewCollection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getNewCollection();
-                goToNextWord();
+        btnGetNewCollection.setOnClickListener(v -> {
+            generateNewDeck();
+            goToNextWord();
+        });
+
+        btnNextWord.setOnClickListener(v -> goToNextWord());
+
+        switchShowJA.setOnClickListener(v -> {
+            if (currentSentence != null) {
+                jaSentence.setText((switchShowJA.isChecked()) ? currentSentence.getJpn() : "");
             }
         });
 
-        btnNextWord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToNextWord();
+        switchShowTranslation.setOnClickListener(v -> {
+            if (currentSentence != null) {
+                translation.setText((switchShowTranslation.isChecked()) ? currentSentence.getVie() : "");
             }
         });
 
-        switchShowJA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentSentence != null) {
-                    jaSentence.setText((switchShowJA.isChecked()) ? currentSentence.getJpn() : "");
-                }
-            }
-        });
-
-        switchShowTranslation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentSentence != null) {
-                    translation.setText((switchShowTranslation.isChecked()) ? currentSentence.getVie() : "");
-                }
-            }
-        });
-
-        switchShowHint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentSentence != null) {
-                    hint.setText((switchShowHint.isChecked()) ? currentSentence.getMeaning() : "");
-                }
+        switchShowHint.setOnClickListener(v -> {
+            if (currentSentence != null) {
+                hint.setText((switchShowHint.isChecked()) ? currentSentence.getMeaning() : "");
             }
         });
 
     }
 
+//    private void initializeData() {
+//        if (mDiEntryViewModel.getAllEntriesSynchronous().isEmpty()) {
+//            try {
+//                populateDatabaseFromFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            Toast.makeText(this, "Populated database from file", Toast.LENGTH_SHORT).show();
+//        }
+//        generateNewDeck();
+//    }
 
-    public void readExcelFileFromAssets() {
-        try {
-            InputStream myInput;
-            // initialize asset manager
-            AssetManager assetManager = getAssets();
-            //  open excel sheet
-            myInput = assetManager.open("BST Câu.xlsx");
-            OPCPackage pkg = OPCPackage.open(myInput);
-            XSSFWorkbook sourceWb = new XSSFWorkbook(pkg);
-            // Get the first sheet from workbook
-            XSSFSheet sheet = sourceWb.getSheetAt(0);
-            // We now need something to iterate through the cells.
-            int rowCount = 1;
-            XSSFRow row = sheet.getRow(rowCount);
-            while (!row.getCell(1).getStringCellValue().isEmpty()) {
-                String id = row.getCell(0).getNumericCellValue() + "";
-                String jaSentence = row.getCell(1).getStringCellValue();
-                String translation = row.getCell(2).getStringCellValue();
-                String hint = row.getCell(3).getStringCellValue();
-                fullList.add(new DiEntry(id + "", jaSentence, "", translation, hint));
-                row = sheet.getRow(++rowCount);
-            }
-        } catch (Exception e) {
-            Log.e("aaa", "error " + e.toString());
+
+//    public void populateDatabaseFromFile() throws IOException {
+//        FileReader fileReader = new FileReader("BST Câu.tsv");
+//        BufferedReader bufferedReader = new BufferedReader(fileReader);
+//        String line;
+//        String[] fields;
+//        String id;
+//        String japanese;
+//        String meaning;
+//        String english;
+//        String vietnamese;
+//        String note;
+//        while ((line = bufferedReader.readLine()) != null) {
+//            fields = line.split("\t");
+//            id = fields[ID_FIELD_CODE];
+//            japanese = fields[JAPANESE_FIELD_CODE];
+//            vietnamese = fields[VIETNAMESE_FIELD_CODE];
+//            note = fields[NOTE_FIELD_CODE];
+//            mDiEntryViewModel.insert(new DiEntry(id, japanese, "", "", vietnamese, note));
+//        }
+//        bufferedReader.close();
+//        fileReader.close();
+//        Log.e("populate database", "it ran");
+//    }
+
+    public class ProcessPopulateDatabaseInBackground extends AsyncTask<Integer, Integer, Integer> {
+        ProgressDialog progressDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            progressDialog = new ProgressDialog(getApplicationContext());
+            progressDialog.show();
+        }
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+//            try (FileReader fileReader = new FileReader("BST Câu.tsv")) {
+//                BufferedReader bufferedReader = new BufferedReader(fileReader);
+//                String line;
+//                String[] fields;
+//                String id;
+//                String japanese;
+//                String meaning;
+//                String english;
+//                String vietnamese;
+//                String note;
+//                while ((line = bufferedReader.readLine()) != null) {
+//                    fields = line.split("\t");
+//                    id = fields[ID_FIELD_CODE];
+//                    japanese = fields[JAPANESE_FIELD_CODE];
+//                    vietnamese = fields[VIETNAMESE_FIELD_CODE];
+//                    note = fields[NOTE_FIELD_CODE];
+//                    mDiEntryViewModel.insert(new DiEntry(id, japanese, "", "", vietnamese, note));
+//                }
+//                bufferedReader.close();
+//                fileReader.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+
+            progressDialog.dismiss();
         }
     }
 
-    public void getNewCollection() {
-        shortList = new ArrayList<DiEntry>();
-        for (int i = 0; i < 20; i++) {
-            shortList.add(fullList.get((int) (fullList.size() * Math.random())));
+
+    public void generateNewDeck() {
+        currentDeck = new ArrayList<DiEntry>();
+        for (int i = 0; i < DECK_SIZE; i++) {
+            currentDeck.add(mDiEntryViewModel.findDiEntryByIdSynchronous((int) (Math.random() * entryCount) + ""));
         }
     }
 
     public void goToNextWord() {
-        currentSentence = shortList.get((int) (Math.random() * shortList.size()));
+        currentSentence = currentDeck.get((int) (Math.random() * currentDeck.size()));
         jaSentence.setText((switchShowJA.isChecked()) ? currentSentence.getJpn() : "");
         translation.setText((switchShowTranslation.isChecked()) ? currentSentence.getVie() : "");
         hint.setText((switchShowHint.isChecked()) ? currentSentence.getMeaning() : "");
-        id.setText(currentSentence.getSid());
+        id.setText(currentSentence.getId());
     }
 
 

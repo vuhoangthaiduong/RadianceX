@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ public class BrowseActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<DiEntry> myDataset;
+    private DiEntryViewModel mDiEntryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,9 @@ public class BrowseActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        //
+        mDiEntryViewModel = new ViewModelProvider(this).get(DiEntryViewModel.class);
+
         // specify an adapter (see also next example)
         myDataset = new ArrayList<>();
         String[] sampleStrings = new String[4];
@@ -46,13 +51,14 @@ public class BrowseActivity extends AppCompatActivity {
         sampleStrings[1] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
         sampleStrings[2] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt";
         sampleStrings[3] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt, ut labore et dolore magna aliqua";
-        for (int i = 1; i <= 100; i++) {
-            jpn = sampleStrings[(int)(Math.random() * 4)];
-            eng = sampleStrings[(int)(Math.random() * 4)];
-            mea = sampleStrings[(int)(Math.random() * 4)];
-            vie = sampleStrings[(int)(Math.random() * 4)];
-            myDataset.add(new DiEntry(i + "\n" + jpn, i + "\n" + eng, i + "\n" + mea, i + "\n" + vie));
-        }
+//        for (int i = 1; i <= 100; i++) {
+//            jpn = sampleStrings[(int)(Math.random() * 4)];
+//            eng = sampleStrings[(int)(Math.random() * 4)];
+//            mea = sampleStrings[(int)(Math.random() * 4)];
+//            vie = sampleStrings[(int)(Math.random() * 4)];
+//            myDataset.add(new DiEntry(i + "", jpn, mea, eng, vie, ""));
+//        }
+        myDataset.addAll(mDiEntryViewModel.getAllEntriesSynchronous());
 
         mAdapter = new EntryRecyclerViewAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);

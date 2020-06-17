@@ -32,6 +32,7 @@
                     android:text="Number of cards"
                     android:textAllCaps="true"
                     android:textColor="#3F51B5"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -50,6 +51,7 @@
                     android:text="@string/entry_id"
                     android:textAllCaps="true"
                     android:textColor="#3F51B5"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -74,7 +76,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="250dp">
+                    android:layout_height="200dp">
 
                     <TextView
                         android:id="@+id/jaSentenceLabel"
@@ -84,6 +86,7 @@
                         android:layout_marginTop="8dp"
                         android:text="Japanese"
                         android:textColor="#E91E63"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +123,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="250dp">
+                    android:layout_height="200dp">
 
                     <TextView
                         android:id="@+id/hintLabel"
@@ -130,6 +133,7 @@
                         android:layout_marginTop="8dp"
                         android:text="Hint"
                         android:textColor="#E91E63"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -166,7 +170,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="200dp">
 
                     <TextView
                         android:id="@+id/translationLabel"
@@ -176,6 +180,7 @@
                         android:layout_marginTop="8dp"
                         android:text="Translation"
                         android:textColor="#E91E63"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -193,7 +198,6 @@
                     <TextView
                         android:id="@+id/translation"
                         android:layout_width="0dp"
-                        android:layout_height="250dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:background="#FFFFFF"
@@ -205,7 +209,8 @@
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/showTranslationSwitch"
-                        app:layout_constraintVertical_bias="0.0" />
+                        app:layout_constraintVertical_bias="0.0"
+                        android:layout_height="0dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>

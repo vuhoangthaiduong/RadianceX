@@ -6,19 +6,22 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "DiEntry")
+@Entity(tableName = "dientries")
 public class DiEntry {
     @PrimaryKey
     @NonNull
-    private String sid;
+    @ColumnInfo(name = "id")
+    private String id;
     @ColumnInfo(name = "ja")
     private String jpn;
-    @ColumnInfo(name = "eng")
-    private String eng;
     @ColumnInfo(name = "meaning")
     private String meaning;
+    @ColumnInfo(name = "eng")
+    private String eng;
     @ColumnInfo(name = "vie")
     private String vie;
+    @ColumnInfo(name = "note")
+    private String note;
     @ColumnInfo(name = "favourite")
     private boolean favourite;
 
@@ -29,26 +32,20 @@ public class DiEntry {
 
     @Ignore
     public DiEntry(String id) {
-        this.sid = id;
+        this.id = id;
     }
 
-    public DiEntry(String id, String jpn, String eng, String meaning, String vie) {
-        this.sid = id;
+    public DiEntry(String id, String jpn, String meaning, String eng, String vie, String note) {
+        this.id = id;
         this.jpn = jpn;
-        this.eng = eng;
         this.meaning = meaning;
+        this.eng = eng;
         this.vie = vie;
+        this.note = note;
     }
 
-    public DiEntry(String jpn, String eng, String meaning, String vie) {
-        this.jpn = jpn;
-        this.eng = eng;
-        this.meaning = meaning;
-        this.vie = vie;
-    }
-
-    public String getSid() {
-        return this.sid;
+    public String getId() {
+        return this.id;
     }
 
     public String getJpn() {
@@ -71,8 +68,8 @@ public class DiEntry {
         return this.favourite;
     }
 
-    public void setSid(String sid) {
-        this.sid = sid;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setJpn(String jpn) {
@@ -92,4 +89,15 @@ public class DiEntry {
     }
 
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public void setMeaning(String meaning) {
+        this.meaning = meaning;
+    }
 }

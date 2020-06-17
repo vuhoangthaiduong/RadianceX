@@ -12,15 +12,34 @@ public class DiEntryViewModel extends AndroidViewModel {
     private DiEntryRepository mRepository;
 
     private LiveData<List<DiEntry>> mAllEntries;
+    private List<DiEntry> mAllEntriesSynchronous;
+
 
     public DiEntryViewModel(Application application) {
         super(application);
         mRepository = new DiEntryRepository(application);
-        mAllEntries = mRepository.getAllEntries();
+        mAllEntries = mRepository.getAllDiEntries();
+//        mAllEntriesSynchronous = mRepository.getAllDiEntriesSynchronous();
     }
 
     LiveData<List<DiEntry>> getAllEntries() {
         return mAllEntries;
+    }
+
+    List<DiEntry> getAllEntriesSynchronous() {
+        return mAllEntriesSynchronous;
+    }
+
+    LiveData<DiEntry> findDiEntryById(String id) {
+        return mRepository.findDiEntryById(id);
+    }
+
+    DiEntry findDiEntryByIdSynchronous(String id) {
+        return mRepository.findDiEntryByIdSynchronous(id);
+    }
+
+    int getNumberOfEntries() {
+        return mRepository.getNumberOfEntries();
     }
 
 
