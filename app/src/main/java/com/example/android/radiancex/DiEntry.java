@@ -32,6 +32,14 @@ public class DiEntry {
         this.sid = id;
     }
 
+    public DiEntry(String id, String jpn, String eng, String meaning, String vie) {
+        this.sid = id;
+        this.jpn = jpn;
+        this.eng = eng;
+        this.meaning = meaning;
+        this.vie = vie;
+    }
+
     public DiEntry(String jpn, String eng, String meaning, String vie) {
         this.jpn = jpn;
         this.eng = eng;

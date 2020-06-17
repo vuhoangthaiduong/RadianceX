@@ -27,5 +27,6 @@
     <string name="load_file">Load file</string>
     <string name="entry_id">Entry ID</string>
     <string name="next">Next</string>
+    <string name="shuffle">Shuffle</string>
 
 </resources>
