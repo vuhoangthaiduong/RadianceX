@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         // load fragment
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        transaction.replace(R.id.container, fragment);
+        transaction.replace(R.id.container_test, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

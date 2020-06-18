@@ -26,6 +26,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <FrameLayout
+            android:id="@+id/container_test"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+
         <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:id="@+id/add_content_menu"
             android:layout_width="421dp"
@@ -33,7 +38,7 @@
             android:layout_gravity="end|bottom"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="72dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             fab:fab_addButtonColorNormal="@color/pink"
@@ -75,6 +80,7 @@
                 fab:fab_size="mini"
                 fab:fab_title="@string/new_blog_post" />
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

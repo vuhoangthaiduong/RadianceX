@@ -51,14 +51,14 @@ public class BrowseActivity extends AppCompatActivity {
         sampleStrings[1] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
         sampleStrings[2] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt";
         sampleStrings[3] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt, ut labore et dolore magna aliqua";
-//        for (int i = 1; i <= 100; i++) {
-//            jpn = sampleStrings[(int)(Math.random() * 4)];
-//            eng = sampleStrings[(int)(Math.random() * 4)];
-//            mea = sampleStrings[(int)(Math.random() * 4)];
-//            vie = sampleStrings[(int)(Math.random() * 4)];
-//            myDataset.add(new DiEntry(i + "", jpn, mea, eng, vie, ""));
-//        }
-        myDataset.addAll(mDiEntryViewModel.getAllEntriesSynchronous());
+        for (int i = 1; i <= 100; i++) {
+            jpn = sampleStrings[(int)(Math.random() * 4)];
+            eng = sampleStrings[(int)(Math.random() * 4)];
+            mea = sampleStrings[(int)(Math.random() * 4)];
+            vie = sampleStrings[(int)(Math.random() * 4)];
+            myDataset.add(new DiEntry(i + "", jpn, mea, eng, vie, ""));
+        }
+//        myDataset.addAll(mDiEntryViewModel.getAllEntriesSynchronous());
 
         mAdapter = new EntryRecyclerViewAdapter(myDataset);
         recyclerView.setAdapter(mAdapter);
