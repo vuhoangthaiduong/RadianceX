@@ -28,5 +28,7 @@
     <string name="entry_id">Entry ID</string>
     <string name="next">Next</string>
     <string name="shuffle">Shuffle</string>
+    <string name="word_of_the_day">Word of the day</string>
+    <string name="number_of_cards">Number of cards</string>
 
 </resources>

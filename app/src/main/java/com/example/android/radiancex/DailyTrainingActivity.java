@@ -73,6 +73,8 @@ public class DailyTrainingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_training);
 
+        getSupportActionBar().setTitle(R.string.daily_training);
+
         jaSentence = findViewById(R.id.jaSentence);
         translation = findViewById(R.id.translation);
         hint = findViewById(R.id.hint);
@@ -102,6 +104,7 @@ public class DailyTrainingActivity extends AppCompatActivity {
 
         btnLoadFile.setOnClickListener(v -> {
             Log.d("a------------------", "yay");
+            Toast.makeText(this, "Button clicked", Toast.LENGTH_SHORT).show();
             new ProcessPopulateDatabaseInBackground().execute();
 //            totalNumberOfCards.setText(entryCount);
             btnLoadFile.setEnabled(false);
@@ -173,41 +176,39 @@ public class DailyTrainingActivity extends AppCompatActivity {
 //        Log.e("populate database", "it ran");
 //    }
 
-    public class ProcessPopulateDatabaseInBackground extends AsyncTask<Integer, Integer, Integer> {
+    private class ProcessPopulateDatabaseInBackground extends AsyncTask<Integer, Integer, Integer> {
         ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
-            progressDialog = new ProgressDialog(getApplicationContext());
+            progressDialog = new ProgressDialog(DailyTrainingActivity.this);
             progressDialog.show();
         }
 
         @Override
         protected Integer doInBackground(Integer... integers) {
-//            try (FileReader fileReader = new FileReader("BST Câu.tsv")) {
-//                BufferedReader bufferedReader = new BufferedReader(fileReader);
-//                String line;
-//                String[] fields;
-//                String id;
-//                String japanese;
-//                String meaning;
-//                String english;
-//                String vietnamese;
-//                String note;
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    fields = line.split("\t");
-//                    id = fields[ID_FIELD_CODE];
-//                    japanese = fields[JAPANESE_FIELD_CODE];
-//                    vietnamese = fields[VIETNAMESE_FIELD_CODE];
-//                    note = fields[NOTE_FIELD_CODE];
-//                    mDiEntryViewModel.insert(new DiEntry(id, japanese, "", "", vietnamese, note));
-//                }
-//                bufferedReader.close();
-//                fileReader.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            try (FileReader fileReader = new FileReader("BST Câu.tsv")) {
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String line;
+                String[] fields;
+                String id;
+                String japanese;
+                String meaning;
+                String english;
+                String vietnamese;
+                String note;
+                while ((line = bufferedReader.readLine()) != null) {
+                    fields = line.split("\t");
+                    id = fields[ID_FIELD_CODE];
+                    japanese = fields[JAPANESE_FIELD_CODE];
+                    vietnamese = fields[VIETNAMESE_FIELD_CODE];
+                    note = fields[NOTE_FIELD_CODE];
+                    mDiEntryViewModel.insert(new DiEntry(id, japanese, "", "", vietnamese, note));
+                }
+                bufferedReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
