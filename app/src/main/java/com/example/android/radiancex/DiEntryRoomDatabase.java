@@ -2,9 +2,11 @@ package com.example.android.radiancex;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,11 +26,23 @@ abstract class DiEntryRoomDatabase extends RoomDatabase {
             synchronized (DiEntryRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            DiEntryRoomDatabase.class, "word_database")
+                            DiEntryRoomDatabase.class, "dientries").fallbackToDestructiveMigration().addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
+
+    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+
+            databaseWriteExecutor.execute(() -> {
+                DiEntryDao dao = INSTANCE.dictionaryEntryDao();
+                dao.deleteAll();
+            });
+        }
+    };
 }

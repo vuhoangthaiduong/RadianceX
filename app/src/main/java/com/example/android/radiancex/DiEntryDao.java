@@ -44,6 +44,6 @@ public interface DiEntryDao {
     DiEntry findDiEntryByIdSynchronous(String id);
 
     @Query("SELECT COUNT(*) FROM dientries")
-    int getNumberOfEntries();
+    int getNumberOfEntriesSynchronous();
 
 }

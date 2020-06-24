@@ -11,7 +11,6 @@ public class DiEntryRepository {
 
     private DiEntryDao mDiEntryDao;
     private LiveData<List<DiEntry>> mAllEntries;
-    private List<DiEntry> mAllEntriesSynchronous;
 
     // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
@@ -21,8 +20,6 @@ public class DiEntryRepository {
         DiEntryRoomDatabase db = DiEntryRoomDatabase.getDatabase(application);
         mDiEntryDao = db.dictionaryEntryDao();
         mAllEntries = mDiEntryDao.getAllDiEntries();
-        mAllEntriesSynchronous = new ArrayList<>();
-        mAllEntriesSynchronous.add(new DiEntry("", "", "", "", "", ""));
     }
 
     // Room executes all queries on a separate thread.
@@ -32,7 +29,7 @@ public class DiEntryRepository {
     }
 
     List<DiEntry> getAllDiEntriesSynchronous() {
-        return mAllEntriesSynchronous;
+        return mDiEntryDao.getAllDiEntriesSynchronous();
     }
 
     LiveData<DiEntry> findDiEntryById(String id) {
@@ -43,8 +40,8 @@ public class DiEntryRepository {
         return mDiEntryDao.findDiEntryByIdSynchronous(id);
     }
 
-    int getNumberOfEntries() {
-        return mDiEntryDao.getNumberOfEntries();
+    int getNumberOfEntriesSynchronous() {
+        return mDiEntryDao.getNumberOfEntriesSynchronous();
     }
 
 
@@ -59,4 +56,8 @@ public class DiEntryRepository {
             mDiEntryDao.insert(entry);
         });
     }
+
+//    void insert(final DiEntry entry) {
+//        mDiEntryDao.insert(entry);
+//    }
 }
