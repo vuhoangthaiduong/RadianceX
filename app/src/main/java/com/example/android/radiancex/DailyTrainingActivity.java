@@ -97,52 +97,57 @@ public class DailyTrainingActivity extends AppCompatActivity {
         handler = new Handler();
         mDiEntryViewModel = new ViewModelProvider(this).get(DiEntryViewModel.class);
 
+        progressBar = new ProgressDialog(this);
+        progressBar.setMessage("Initializing");
+        progressBar.setCancelable(false);
+        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressBar.setProgress(0);
+        progressBar.setMax(100);
+        progressBar.show();
         new Thread(() -> {
-            Looper.prepare();
-            progressBar = new ProgressDialog(this);
-            progressBar.setMessage("Initializing");
-            progressBar.setCancelable(false);
-            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressBar.show();
             entryCount = mDiEntryViewModel.getNumberOfEntriesSynchronous();
-            Toast.makeText(this, entryCount + "", Toast.LENGTH_LONG).show();
-            if (entryCount == 0) {
-                btnLoadFile.setEnabled(true);
-                btnGetNewCollection.setEnabled(false);
-                btnNextWord.setEnabled(false);
-            } else {
-                btnLoadFile.setEnabled(false);
-                btnGetNewCollection.setEnabled(true);
-                btnNextWord.setEnabled(true);
+            for (int i = 0; i < 100; i++) {
+                progressBar.setProgress(i + 1);
+                try {
+                    Thread.sleep(15);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            progressBar.dismiss();
-            Looper.loop();
+            handler.post(() -> {
+                Toast.makeText(this, entryCount == 0 ? "Database empty" : entryCount + " entries", Toast.LENGTH_LONG).show();
+                progressBar.dismiss();
+                if (entryCount == 0) {
+                    btnLoadFile.setEnabled(true);
+                    btnGetNewCollection.setEnabled(false);
+                    btnNextWord.setEnabled(false);
+                    new Thread(() -> {
+                        try {
+                            populateDatabaseFromFile();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+                    btnLoadFile.setEnabled(false);
+                    btnGetNewCollection.setEnabled(true);
+                    btnNextWord.setEnabled(true);
+                } else {
+                    btnLoadFile.setEnabled(false);
+                    btnGetNewCollection.setEnabled(true);
+                    btnNextWord.setEnabled(true);
+                }
+            });
         }).start();
 
-
-//        initializeData();
 
 //        mDiEntryViewModel.getAllEntries().observe(this, new Observer<List<DiEntry>>() {
 //            @Override
 //            public void onChanged(@Nullable final List<DiEntry> sentences) {
-//                // Update the cached copy of the sentences in the adapter.
-//                entryCount = mDiEntryViewModel.getAllEntriesSynchronous().size();
-//                totalNumberOfCards.setText(entryCount);
+//
 //            }
 //        });
 
         btnLoadFile.setOnClickListener(v -> {
-            progressBar = new ProgressDialog(v.getContext());
-            progressBar.setCancelable(false);
-            progressBar.setMessage("Propagating database");
-            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressBar.show();
-            Toast.makeText(this, "Button clicked", Toast.LENGTH_SHORT).show();
             btnLoadFile.setEnabled(false);
             btnGetNewCollection.setEnabled(true);
             btnNextWord.setEnabled(true);
@@ -157,7 +162,7 @@ public class DailyTrainingActivity extends AppCompatActivity {
 
         btnGetNewCollection.setOnClickListener(v -> {
             generateNewDeck();
-//            goToNextWord();
+            goToNextWord();
         });
 
         btnNextWord.setOnClickListener(v -> goToNextWord());
@@ -196,36 +201,47 @@ public class DailyTrainingActivity extends AppCompatActivity {
 
 
     public void populateDatabaseFromFile() throws IOException {
-        new Thread(() -> {
-            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.getAssets().open("BST Câu.tsv"), StandardCharsets.UTF_8))) {
-                String line;
-                String[] fields;
-                String id;
-                String japanese;
-                String meaning;
-                String english;
-                String vietnamese;
-                String note;
-                int count = 0;
-                while ((line = bufferedReader.readLine()) != null) {
-                    fields = line.split("\t");
-                    id = fields.length >= 1 ? fields[ID_FIELD_CODE] : "";
-                    japanese = fields.length >= 2 ? fields[JAPANESE_FIELD_CODE] : "";
-                    vietnamese = fields.length >= 3 ? fields[VIETNAMESE_FIELD_CODE] : "";
-                    note = fields.length >= 4 ? fields[NOTE_FIELD_CODE] : "";
-                    mDiEntryViewModel.insert(new DiEntry(id, japanese, "", "", vietnamese, note));
-                    Log.d("Fields ----", id + "|" + japanese + "|" + vietnamese + "|" + note);
+        handler.post(() -> {
+            progressBar = new ProgressDialog(this);
+            progressBar.setCancelable(false);
+            progressBar.setMessage("Populating database");
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.show();
+        });
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.getAssets().open("BST Câu.tsv"), StandardCharsets.UTF_8))) {
+            String line;
+            String[] fields;
+            String id;
+            String japanese;
+            String meaning;
+            String english;
+            String vietnamese;
+            String note;
+            int count = 0;
+            while ((line = bufferedReader.readLine()) != null) {
+                fields = line.split("\t");
+                id = fields.length >= 1 ? fields[ID_FIELD_CODE] : "";
+                japanese = fields.length >= 2 ? fields[JAPANESE_FIELD_CODE] : "";
+                vietnamese = fields.length >= 3 ? fields[VIETNAMESE_FIELD_CODE] : "";
+                note = fields.length >= 4 ? fields[NOTE_FIELD_CODE] : "";
+                mDiEntryViewModel.insert(new DiEntry(id, japanese, "", "", vietnamese, note));
+                Log.d("Fields ----", id + "|" + japanese + "|" + vietnamese + "|" + note);
 //                    mDiEntryViewModel.insert(new DiEntry(count + "", "", "", "", "", ""));
 //                    Log.e("Entry count", "finished, count: " + mDiEntryViewModel.getNumberOfEntriesSynchronous());
-                    count++;
-                }
-                progressBar.dismiss();
-                handler.post(() -> Toast.makeText(this, "Propagation finished", Toast.LENGTH_SHORT).show());
-                Log.d("Populate database ----", "Finished, count: " + mDiEntryViewModel.getNumberOfEntriesSynchronous());
-            } catch (IOException e) {
-                e.printStackTrace();
+                count++;
+                Thread.sleep(3);
             }
-        }).start();
+            entryCount = mDiEntryViewModel.getNumberOfEntriesSynchronous();
+            handler.post(() -> {
+                progressBar.dismiss();
+                Toast.makeText(this, entryCount + " entries imported", Toast.LENGTH_SHORT).show();
+            });
+            new Thread(() -> {
+                Log.d("Database population - ", "Finished, count: " + entryCount);
+            }).start();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void generateNewDeck() {
@@ -241,7 +257,7 @@ public class DailyTrainingActivity extends AppCompatActivity {
         currentSentence = currentDeck.get((int) (Math.random() * currentDeck.size()));
         jaSentence.setText((switchShowJA.isChecked()) ? currentSentence.getJpn() : "");
         translation.setText((switchShowTranslation.isChecked()) ? currentSentence.getVie() : "");
-        hint.setText((switchShowHint.isChecked()) ? currentSentence.getMeaning() : "");
+        hint.setText((switchShowHint.isChecked()) ? currentSentence.getNote() : "");
         id.setText(currentSentence.getId());
     }
 
