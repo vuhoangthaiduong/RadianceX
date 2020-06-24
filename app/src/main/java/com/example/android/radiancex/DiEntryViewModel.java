@@ -38,10 +38,9 @@ public class DiEntryViewModel extends AndroidViewModel {
         return mRepository.findDiEntryByIdSynchronous(id);
     }
 
-    int getNumberOfEntries() {
-        return mRepository.getNumberOfEntries();
+    int getNumberOfEntriesSynchronous() {
+        return mRepository.getNumberOfEntriesSynchronous();
     }
-
 
     public void insert(DiEntry sentence) {
         mRepository.insert(sentence);

@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +45,9 @@ public class DailyTrainingActivity extends AppCompatActivity {
     Switch switchShowHint;
 
     DiEntryViewModel mDiEntryViewModel;
+
+    ProgressDialog progressBar;
+    Handler handler;
 
     private ArrayList<DiEntry> currentDeck;
     private DiEntry currentSentence;
@@ -87,9 +94,36 @@ public class DailyTrainingActivity extends AppCompatActivity {
         switchShowTranslation = findViewById(R.id.showTranslationSwitch);
         switchShowHint = findViewById(R.id.showHintSwitch);
 
+        handler = new Handler();
         mDiEntryViewModel = new ViewModelProvider(this).get(DiEntryViewModel.class);
 
-//        entryCount = mDiEntryViewModel.getNumberOfEntries();
+        new Thread(() -> {
+            Looper.prepare();
+            progressBar = new ProgressDialog(this);
+            progressBar.setMessage("Initializing");
+            progressBar.setCancelable(false);
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.show();
+            entryCount = mDiEntryViewModel.getNumberOfEntriesSynchronous();
+            Toast.makeText(this, entryCount + "", Toast.LENGTH_LONG).show();
+            if (entryCount == 0) {
+                btnLoadFile.setEnabled(true);
+                btnGetNewCollection.setEnabled(false);
+                btnNextWord.setEnabled(false);
+            } else {
+                btnLoadFile.setEnabled(false);
+                btnGetNewCollection.setEnabled(true);
+                btnNextWord.setEnabled(true);
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            progressBar.dismiss();
+            Looper.loop();
+        }).start();
+
 
 //        initializeData();
 
@@ -103,18 +137,27 @@ public class DailyTrainingActivity extends AppCompatActivity {
 //        });
 
         btnLoadFile.setOnClickListener(v -> {
-            Log.d("a------------------", "yay");
+            progressBar = new ProgressDialog(v.getContext());
+            progressBar.setCancelable(false);
+            progressBar.setMessage("Propagating database");
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.show();
             Toast.makeText(this, "Button clicked", Toast.LENGTH_SHORT).show();
-            new ProcessPopulateDatabaseInBackground().execute();
-//            totalNumberOfCards.setText(entryCount);
             btnLoadFile.setEnabled(false);
             btnGetNewCollection.setEnabled(true);
             btnNextWord.setEnabled(true);
+            try {
+                populateDatabaseFromFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+//            generateNewDeck();
+//            goToNextWord();
         });
 
         btnGetNewCollection.setOnClickListener(v -> {
             generateNewDeck();
-            goToNextWord();
+//            goToNextWord();
         });
 
         btnNextWord.setOnClickListener(v -> goToNextWord());
@@ -152,43 +195,9 @@ public class DailyTrainingActivity extends AppCompatActivity {
 //    }
 
 
-//    public void populateDatabaseFromFile() throws IOException {
-//        FileReader fileReader = new FileReader("BST Câu.tsv");
-//        BufferedReader bufferedReader = new BufferedReader(fileReader);
-//        String line;
-//        String[] fields;
-//        String id;
-//        String japanese;
-//        String meaning;
-//        String english;
-//        String vietnamese;
-//        String note;
-//        while ((line = bufferedReader.readLine()) != null) {
-//            fields = line.split("\t");
-//            id = fields[ID_FIELD_CODE];
-//            japanese = fields[JAPANESE_FIELD_CODE];
-//            vietnamese = fields[VIETNAMESE_FIELD_CODE];
-//            note = fields[NOTE_FIELD_CODE];
-//            mDiEntryViewModel.insert(new DiEntry(id, japanese, "", "", vietnamese, note));
-//        }
-//        bufferedReader.close();
-//        fileReader.close();
-//        Log.e("populate database", "it ran");
-//    }
-
-    private class ProcessPopulateDatabaseInBackground extends AsyncTask<Integer, Integer, Integer> {
-        ProgressDialog progressDialog;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(DailyTrainingActivity.this);
-            progressDialog.show();
-        }
-
-        @Override
-        protected Integer doInBackground(Integer... integers) {
-            try (FileReader fileReader = new FileReader("BST Câu.tsv")) {
-                BufferedReader bufferedReader = new BufferedReader(fileReader);
+    public void populateDatabaseFromFile() throws IOException {
+        new Thread(() -> {
+            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.getAssets().open("BST Câu.tsv"), StandardCharsets.UTF_8))) {
                 String line;
                 String[] fields;
                 String id;
@@ -197,35 +206,35 @@ public class DailyTrainingActivity extends AppCompatActivity {
                 String english;
                 String vietnamese;
                 String note;
+                int count = 0;
                 while ((line = bufferedReader.readLine()) != null) {
                     fields = line.split("\t");
-                    id = fields[ID_FIELD_CODE];
-                    japanese = fields[JAPANESE_FIELD_CODE];
-                    vietnamese = fields[VIETNAMESE_FIELD_CODE];
-                    note = fields[NOTE_FIELD_CODE];
+                    id = fields.length >= 1 ? fields[ID_FIELD_CODE] : "";
+                    japanese = fields.length >= 2 ? fields[JAPANESE_FIELD_CODE] : "";
+                    vietnamese = fields.length >= 3 ? fields[VIETNAMESE_FIELD_CODE] : "";
+                    note = fields.length >= 4 ? fields[NOTE_FIELD_CODE] : "";
                     mDiEntryViewModel.insert(new DiEntry(id, japanese, "", "", vietnamese, note));
+                    Log.d("Fields ----", id + "|" + japanese + "|" + vietnamese + "|" + note);
+//                    mDiEntryViewModel.insert(new DiEntry(count + "", "", "", "", "", ""));
+//                    Log.e("Entry count", "finished, count: " + mDiEntryViewModel.getNumberOfEntriesSynchronous());
+                    count++;
                 }
-                bufferedReader.close();
+                progressBar.dismiss();
+                handler.post(() -> Toast.makeText(this, "Propagation finished", Toast.LENGTH_SHORT).show());
+                Log.d("Populate database ----", "Finished, count: " + mDiEntryViewModel.getNumberOfEntriesSynchronous());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
-
-            progressDialog.dismiss();
-        }
+        }).start();
     }
-
 
     public void generateNewDeck() {
         currentDeck = new ArrayList<DiEntry>();
-        for (int i = 0; i < DECK_SIZE; i++) {
-            currentDeck.add(mDiEntryViewModel.findDiEntryByIdSynchronous((int) (Math.random() * entryCount) + ""));
-        }
+        new Thread(() -> {
+            for (int i = 0; i < DECK_SIZE; i++) {
+                currentDeck.add(mDiEntryViewModel.findDiEntryByIdSynchronous((int) (Math.random() * entryCount) + ""));
+            }
+        }).start();
     }
 
     public void goToNextWord() {
