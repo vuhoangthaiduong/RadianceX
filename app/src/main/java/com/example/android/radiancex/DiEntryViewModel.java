@@ -12,14 +12,12 @@ public class DiEntryViewModel extends AndroidViewModel {
     private DiEntryRepository mRepository;
 
     private LiveData<List<DiEntry>> mAllEntries;
-    private List<DiEntry> mAllEntriesSynchronous;
 
 
     public DiEntryViewModel(Application application) {
         super(application);
         mRepository = new DiEntryRepository(application);
         mAllEntries = mRepository.getAllDiEntries();
-//        mAllEntriesSynchronous = mRepository.getAllDiEntriesSynchronous();
     }
 
     LiveData<List<DiEntry>> getAllEntries() {
@@ -27,7 +25,7 @@ public class DiEntryViewModel extends AndroidViewModel {
     }
 
     List<DiEntry> getAllEntriesSynchronous() {
-        return mAllEntriesSynchronous;
+        return mRepository.getAllDiEntriesSynchronous();
     }
 
     LiveData<DiEntry> findDiEntryById(String id) {

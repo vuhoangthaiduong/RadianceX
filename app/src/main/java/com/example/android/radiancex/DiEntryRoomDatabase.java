@@ -8,6 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,7 +27,9 @@ abstract class DiEntryRoomDatabase extends RoomDatabase {
             synchronized (DiEntryRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            DiEntryRoomDatabase.class, "dientries").fallbackToDestructiveMigration().addCallback(sRoomDatabaseCallback)
+                            DiEntryRoomDatabase.class, "dientries").fallbackToDestructiveMigration()
+                            .addCallback(sRoomDatabaseCallback)
+                            .createFromAsset("dictionary.db")
                             .build();
                 }
             }
@@ -42,6 +45,8 @@ abstract class DiEntryRoomDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 DiEntryDao dao = INSTANCE.dictionaryEntryDao();
                 dao.deleteAll();
+                dao.insert(new DiEntry("0", "j0", "v0", "e0", "v0", "n0"));
+                dao.insert(new DiEntry("00", "j00", "v00", "e00", "v00", "n00"));
             });
         }
     };

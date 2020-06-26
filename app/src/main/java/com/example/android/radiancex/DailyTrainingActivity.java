@@ -1,15 +1,10 @@
 package com.example.android.radiancex;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -46,7 +37,7 @@ public class DailyTrainingActivity extends AppCompatActivity {
 
     DiEntryViewModel mDiEntryViewModel;
 
-    ProgressDialog progressBar;
+    ProgressDialog progressDialog;
     Handler handler;
 
     private ArrayList<DiEntry> currentDeck;
@@ -97,55 +88,15 @@ public class DailyTrainingActivity extends AppCompatActivity {
         handler = new Handler();
         mDiEntryViewModel = new ViewModelProvider(this).get(DiEntryViewModel.class);
 
-        progressBar = new ProgressDialog(this);
-        progressBar.setMessage("Initializing");
-        progressBar.setCancelable(false);
-        progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressBar.setProgress(0);
-        progressBar.setMax(100);
-        progressBar.show();
-        new Thread(() -> {
-            entryCount = mDiEntryViewModel.getNumberOfEntriesSynchronous();
-            for (int i = 0; i < 100; i++) {
-                progressBar.setProgress(i + 1);
-                try {
-                    Thread.sleep(15);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        fakeLoading();
+
+        mDiEntryViewModel.getAllEntries().observe(this, new Observer<List<DiEntry>>() {
+            @Override
+            public void onChanged(@Nullable final List<DiEntry> sentences) {
+                generateNewDeck();
+                goToNextWord();
             }
-            handler.post(() -> {
-                Toast.makeText(this, entryCount == 0 ? "Database empty" : entryCount + " entries", Toast.LENGTH_LONG).show();
-                progressBar.dismiss();
-                if (entryCount == 0) {
-                    btnLoadFile.setEnabled(true);
-                    btnGetNewCollection.setEnabled(false);
-                    btnNextWord.setEnabled(false);
-                    new Thread(() -> {
-                        try {
-                            populateDatabaseFromFile();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }).start();
-                    btnLoadFile.setEnabled(false);
-                    btnGetNewCollection.setEnabled(true);
-                    btnNextWord.setEnabled(true);
-                } else {
-                    btnLoadFile.setEnabled(false);
-                    btnGetNewCollection.setEnabled(true);
-                    btnNextWord.setEnabled(true);
-                }
-            });
-        }).start();
-
-
-//        mDiEntryViewModel.getAllEntries().observe(this, new Observer<List<DiEntry>>() {
-//            @Override
-//            public void onChanged(@Nullable final List<DiEntry> sentences) {
-//
-//            }
-//        });
+        });
 
         btnLoadFile.setOnClickListener(v -> {
             btnLoadFile.setEnabled(false);
@@ -199,14 +150,59 @@ public class DailyTrainingActivity extends AppCompatActivity {
 //        generateNewDeck();
 //    }
 
+    private void fakeLoading() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Initializing");
+        progressDialog.setCancelable(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setProgress(0);
+        progressDialog.setMax(100);
+        progressDialog.show();
+
+        new Thread(() -> {
+            entryCount = mDiEntryViewModel.getNumberOfEntriesSynchronous();
+            for (int i = 0; i < 100; i++) {
+                progressDialog.setProgress(i + 1);
+                try {
+                    Thread.sleep(15);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            handler.post(() -> {
+                Toast.makeText(this, entryCount == 0 ? "Database empty" : entryCount + " entries", Toast.LENGTH_LONG).show();
+                progressDialog.dismiss();
+                if (entryCount == 0) {
+                    btnLoadFile.setEnabled(true);
+                    btnGetNewCollection.setEnabled(false);
+                    btnNextWord.setEnabled(false);
+                    new Thread(() -> {
+                        try {
+                            populateDatabaseFromFile();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+                    btnLoadFile.setEnabled(false);
+                    btnGetNewCollection.setEnabled(true);
+                    btnNextWord.setEnabled(true);
+                } else {
+                    btnLoadFile.setEnabled(false);
+                    btnGetNewCollection.setEnabled(true);
+                    btnNextWord.setEnabled(true);
+                }
+            });
+        }).start();
+    }
+
 
     public void populateDatabaseFromFile() throws IOException {
         handler.post(() -> {
-            progressBar = new ProgressDialog(this);
-            progressBar.setCancelable(false);
-            progressBar.setMessage("Populating database");
-            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressBar.show();
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Populating database");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.show();
         });
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(this.getAssets().open("BST Câu.tsv"), StandardCharsets.UTF_8))) {
             String line;
@@ -233,7 +229,7 @@ public class DailyTrainingActivity extends AppCompatActivity {
             }
             entryCount = mDiEntryViewModel.getNumberOfEntriesSynchronous();
             handler.post(() -> {
-                progressBar.dismiss();
+                progressDialog.dismiss();
                 Toast.makeText(this, entryCount + " entries imported", Toast.LENGTH_SHORT).show();
             });
             new Thread(() -> {
