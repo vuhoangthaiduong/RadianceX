@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <include layout="@layout/appbar" />
+
     <EditText
         android:id="@+id/etJapanese"
         android:layout_width="0dp"
@@ -57,12 +59,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="Japanese"
         android:textColor="@color/colorPrimaryText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/appbar"
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
     <TextView
         android:id="@+id/tvEnglish"

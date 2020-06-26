@@ -19,26 +19,22 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActionBar toolbar;
     private FloatingActionsMenu floatingActionsMenu;
-    private FloatingActionButton btnNewEntry;
-    private FloatingActionButton btnNewQuestion;
-    private FloatingActionButton btnNewPost;
     private TextView tvScreenname;
+
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().hide();
-        
         tvScreenname = findViewById(R.id.tvScreenName);
 
         floatingActionsMenu = findViewById(R.id.add_content_menu);
-        btnNewEntry = findViewById(R.id.action_add_entry);
-        btnNewPost = findViewById(R.id.action_new_blog_post);
-        btnNewQuestion = findViewById(R.id.action_new_question);
+        FloatingActionButton btnNewEntry = findViewById(R.id.action_add_entry);
+        FloatingActionButton btnNewPost = findViewById(R.id.action_new_blog_post);
+        FloatingActionButton btnNewQuestion = findViewById(R.id.action_new_question);
 
         btnNewEntry.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddNewEntryActivity.class);
@@ -59,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Toast.makeText(this, "Entry added", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -68,18 +74,21 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.action_dictionary:
                     floatingActionsMenu.setVisibility(View.VISIBLE);
+                    if (floatingActionsMenu.isExpanded()) floatingActionsMenu.collapse();
                     fragment = new DictionaryFragment();
                     tvScreenname.setText(R.string.dictionary);
                     loadFragment(fragment);
                     return true;
                 case R.id.action_ask:
                     floatingActionsMenu.setVisibility(View.VISIBLE);
+                    if (floatingActionsMenu.isExpanded()) floatingActionsMenu.collapse();
                     fragment = new AskFragment();
                     tvScreenname.setText(R.string.ask);
                     loadFragment(fragment);
                     return true;
                 case R.id.action_blog:
                     floatingActionsMenu.setVisibility(View.VISIBLE);
+                    if (floatingActionsMenu.isExpanded()) floatingActionsMenu.collapse();
                     fragment = new BlogFragment();
                     tvScreenname.setText(R.string.blog);
                     loadFragment(fragment);

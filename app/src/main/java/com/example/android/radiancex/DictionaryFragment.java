@@ -7,21 +7,28 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Random;
+
 public class DictionaryFragment extends Fragment {
 
     final int ADD_NEW_ENTRY_ACTIVITY = 1;
     private CardView cvWordOfTheDay;
+    private TextView tvWordOfTheDay;
+    private String wordOfTheDay;
+    private DiEntryViewModel diEntryViewModel;
 
     public DictionaryFragment() {
         // Required empty public constructor
@@ -47,6 +54,13 @@ public class DictionaryFragment extends Fragment {
         CardView cvWordOfTheDay = view.findViewById(R.id.cvWordOfTheDay);
         Button btnDailyTraining = view.findViewById(R.id.btnDailyTraining);
         Button btnBrowse = view.findViewById(R.id.btnBrowse);
+
+        diEntryViewModel = new ViewModelProvider(this).get(DiEntryViewModel.class);
+
+//        new Thread(() -> {
+//            wordOfTheDay = diEntryViewModel.findDiEntryByIdSynchronous(6 + "").getJpn();
+//            tvWordOfTheDay.setText(wordOfTheDay);
+//        }).start();
 
         cvWordOfTheDay.setOnClickListener(v -> {
             Toast.makeText(v.getContext(), "Coming soon!", Toast.LENGTH_SHORT).show();

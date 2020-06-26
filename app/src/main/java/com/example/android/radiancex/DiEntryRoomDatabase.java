@@ -44,9 +44,12 @@ abstract class DiEntryRoomDatabase extends RoomDatabase {
 
             databaseWriteExecutor.execute(() -> {
                 DiEntryDao dao = INSTANCE.dictionaryEntryDao();
-                dao.deleteAll();
-                dao.insert(new DiEntry("0", "j0", "v0", "e0", "v0", "n0"));
-                dao.insert(new DiEntry("00", "j00", "v00", "e00", "v00", "n00"));
+//                dao.deleteAll();
+                String str = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " +
+                        "eiusmod tempor incididunt, ut labore et dolore magna aliqua";
+                for (int i = 0; i < 30; i++) {
+                    dao.insert(new DiEntry((i + 1) + "", str, "v0", "e0", "v0", "n0"));
+                }
             });
         }
     };

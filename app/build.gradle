@@ -45,6 +45,10 @@ dependencies {
 //    implementation 'org.apache.poi:poi:3.12'
 //    implementation "org.apache.poi:poi-ooxml:3.12"
 //    implementation files('libs/poishadow-all.jar')
+
+    //
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
+
     //Multidex
     implementation 'com.android.support:multidex:1.0.3'
 

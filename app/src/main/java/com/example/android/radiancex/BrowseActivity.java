@@ -1,25 +1,26 @@
 package com.example.android.radiancex;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 public class BrowseActivity extends AppCompatActivity {
 
-
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
 
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Browse");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final EntryRecyclerViewAdapter mAdapter = new EntryRecyclerViewAdapter();
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.entry_recycler_view);

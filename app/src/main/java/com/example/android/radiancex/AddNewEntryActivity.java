@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -18,19 +20,23 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class AddNewEntryActivity extends AppCompatActivity {
 
-    private ActionBar toolbar;
     private EditText etJapanese;
     private EditText etMeaning;
     private EditText etVietnamese;
     private EditText etEnglish;
 
+    private DiEntryViewModel diEntryViewModel;
+
+    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_entry);
 
-        toolbar = getSupportActionBar();
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Add new entry");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -38,6 +44,8 @@ public class AddNewEntryActivity extends AppCompatActivity {
         etMeaning = findViewById(R.id.etMeaning);
         etEnglish = findViewById(R.id.etEnglish);
         etVietnamese = findViewById(R.id.etVietnamese);
+
+        diEntryViewModel = new ViewModelProvider(this).get(DiEntryViewModel.class);
 
     }
 
@@ -64,12 +72,17 @@ public class AddNewEntryActivity extends AppCompatActivity {
                 String eng = etEnglish.getText().toString().trim();
                 String meaning = etMeaning.getText().toString().trim();
                 String vie = etVietnamese.getText().toString().trim();
-                Intent intent = new Intent(AddNewEntryActivity.this, DictionaryFragment.class);
-                intent.putExtra("jpn", jpn);
-                intent.putExtra("eng", eng);
-                intent.putExtra("meaning", meaning);
-                intent.putExtra("vie", vie);
-                setResult(RESULT_OK, intent);
+//                Intent intent = new Intent(AddNewEntryActivity.this, DictionaryFragment.class);
+//                intent.putExtra("jpn", jpn);
+//                intent.putExtra("eng", eng);
+//                intent.putExtra("meaning", meaning);
+//                intent.putExtra("vie", vie);
+//                setResult(RESULT_OK, intent);
+                new Thread(() -> {
+                    diEntryViewModel.insert(new DiEntry(diEntryViewModel.getNumberOfEntriesSynchronous() + 1 + "", jpn, meaning, eng, vie, ""));
+                });
+                Intent replyIntent = new Intent();
+                setResult(RESULT_OK, replyIntent);
                 AddNewEntryActivity.this.finish();
             }
         }

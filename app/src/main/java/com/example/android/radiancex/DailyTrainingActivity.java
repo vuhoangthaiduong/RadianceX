@@ -9,8 +9,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,6 +22,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.observers.DisposableObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DailyTrainingActivity extends AppCompatActivity {
 
@@ -71,7 +78,11 @@ public class DailyTrainingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_training);
 
-        getSupportActionBar().setTitle(R.string.daily_training);
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Daily Training");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         jaSentence = findViewById(R.id.jaSentence);
         translation = findViewById(R.id.translation);
@@ -88,15 +99,36 @@ public class DailyTrainingActivity extends AppCompatActivity {
         handler = new Handler();
         mDiEntryViewModel = new ViewModelProvider(this).get(DiEntryViewModel.class);
 
-        fakeLoading();
+        currentDeck = new ArrayList<>();
+
+        initializeData();
 
         mDiEntryViewModel.getAllEntries().observe(this, new Observer<List<DiEntry>>() {
             @Override
             public void onChanged(@Nullable final List<DiEntry> sentences) {
+                totalNumberOfCards.setText(sentences.size() + "");
                 generateNewDeck();
                 goToNextWord();
             }
         });
+
+        Observable<DiEntry> currentDeckObservable = Observable.fromIterable(currentDeck);
+        currentDeckObservable.subscribeOn(Schedulers.newThread())
+                .subscribe(new DisposableObserver<DiEntry>() {
+
+                    @Override
+                    public void onNext(DiEntry t) {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        goToNextWord();
+                    }
+                });
 
         btnLoadFile.setOnClickListener(v -> {
             btnLoadFile.setEnabled(false);
@@ -113,7 +145,6 @@ public class DailyTrainingActivity extends AppCompatActivity {
 
         btnGetNewCollection.setOnClickListener(v -> {
             generateNewDeck();
-            goToNextWord();
         });
 
         btnNextWord.setOnClickListener(v -> goToNextWord());
@@ -138,60 +169,36 @@ public class DailyTrainingActivity extends AppCompatActivity {
 
     }
 
-//    private void initializeData() {
-//        if (mDiEntryViewModel.getAllEntriesSynchronous().isEmpty()) {
-//            try {
-//                populateDatabaseFromFile();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            Toast.makeText(this, "Populated database from file", Toast.LENGTH_SHORT).show();
-//        }
-//        generateNewDeck();
-//    }
-
-    private void fakeLoading() {
+    private void initializeData() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Initializing");
         progressDialog.setCancelable(false);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setProgress(0);
-        progressDialog.setMax(100);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
 
         new Thread(() -> {
             entryCount = mDiEntryViewModel.getNumberOfEntriesSynchronous();
-            for (int i = 0; i < 100; i++) {
-                progressDialog.setProgress(i + 1);
+            handler.post(() -> {
+                progressDialog.dismiss();
+            });
+            if (entryCount == 0) {
+                handler.post(() -> {
+                    Toast.makeText(this, "Database empty", Toast.LENGTH_LONG).show();
+                });
                 try {
-                    Thread.sleep(15);
-                } catch (InterruptedException e) {
+                    populateDatabaseFromFile();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
+                btnLoadFile.setEnabled(true);
+                btnGetNewCollection.setEnabled(false);
+                btnNextWord.setEnabled(false);
+            } else {
+                btnLoadFile.setEnabled(false);
+                btnGetNewCollection.setEnabled(true);
+                btnNextWord.setEnabled(true);
             }
-            handler.post(() -> {
-                Toast.makeText(this, entryCount == 0 ? "Database empty" : entryCount + " entries", Toast.LENGTH_LONG).show();
-                progressDialog.dismiss();
-                if (entryCount == 0) {
-                    btnLoadFile.setEnabled(true);
-                    btnGetNewCollection.setEnabled(false);
-                    btnNextWord.setEnabled(false);
-                    new Thread(() -> {
-                        try {
-                            populateDatabaseFromFile();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }).start();
-                    btnLoadFile.setEnabled(false);
-                    btnGetNewCollection.setEnabled(true);
-                    btnNextWord.setEnabled(true);
-                } else {
-                    btnLoadFile.setEnabled(false);
-                    btnGetNewCollection.setEnabled(true);
-                    btnNextWord.setEnabled(true);
-                }
-            });
+            generateNewDeck();
         }).start();
     }
 
@@ -241,7 +248,7 @@ public class DailyTrainingActivity extends AppCompatActivity {
     }
 
     public void generateNewDeck() {
-        currentDeck = new ArrayList<DiEntry>();
+        currentDeck.clear();
         new Thread(() -> {
             for (int i = 0; i < DECK_SIZE; i++) {
                 currentDeck.add(mDiEntryViewModel.findDiEntryByIdSynchronous((int) (Math.random() * entryCount) + ""));
@@ -250,11 +257,13 @@ public class DailyTrainingActivity extends AppCompatActivity {
     }
 
     public void goToNextWord() {
-        currentSentence = currentDeck.get((int) (Math.random() * currentDeck.size()));
-        jaSentence.setText((switchShowJA.isChecked()) ? currentSentence.getJpn() : "");
-        translation.setText((switchShowTranslation.isChecked()) ? currentSentence.getVie() : "");
-        hint.setText((switchShowHint.isChecked()) ? currentSentence.getNote() : "");
-        id.setText(currentSentence.getId());
+        if (currentDeck != null && currentDeck.size() != 0) {
+            currentSentence = currentDeck.get((int) (Math.random() * currentDeck.size()));
+            jaSentence.setText((switchShowJA.isChecked()) ? currentSentence.getJpn() : "");
+            translation.setText((switchShowTranslation.isChecked()) ? currentSentence.getVie() : "");
+            hint.setText((switchShowHint.isChecked()) ? currentSentence.getNote() : "");
+            id.setText(currentSentence.getId());
+        }
     }
 
 
