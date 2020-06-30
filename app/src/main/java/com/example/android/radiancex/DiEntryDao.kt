@@ -1,30 +1,26 @@
-package com.example.android.radiancex;
+package com.example.android.radiancex
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-
-import java.util.List;
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 
 @Dao
-public interface DiEntryDao {
-
+interface DiEntryDao {
     // allowing the insert of the same word multiple times by passing a
     // conflict resolution strategy
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(DiEntry entry);
+    fun insert(entry: DiEntry?)
 
     @Query("DELETE FROM dientries")
-    void deleteAll();
+    fun deleteAll()
 
     /*
      * LiveData should be chosen for most use cases as running on the main thread will result in the error described on the other method
      */
-    @Query("SELECT * FROM dientries")
-    LiveData<List<DiEntry>> getAllDiEntries();
+    @get:Query("SELECT * FROM dientries")
+    val allDiEntries: LiveData<List<DiEntry?>?>?
 
     /*
      * If you attempt to call this method on the main thread, you will receive the following error:
@@ -34,16 +30,15 @@ public interface DiEntryDao {
      *  at android.arch.persistence.room.RoomDatabase.query(AppDatabase.java:XXX)
      *
      */
-    @Query("SELECT * FROM dientries")
-    List<DiEntry> getAllDiEntriesSynchronous();
+    @get:Query("SELECT * FROM dientries")
+    val allDiEntriesSynchronous: List<DiEntry?>?
 
     @Query("SELECT * FROM dientries WHERE id = :id")
-    LiveData<DiEntry> findDiEntryById(String id);
+    fun findDiEntryById(id: String?): LiveData<DiEntry?>?
 
     @Query("SELECT * FROM dientries WHERE id = :id")
-    DiEntry findDiEntryByIdSynchronous(String id);
+    fun findDiEntryByIdSynchronous(id: String?): DiEntry?
 
-    @Query("SELECT COUNT(*) FROM dientries")
-    int getNumberOfEntriesSynchronous();
-
+    @get:Query("SELECT COUNT(*) FROM dientries")
+    val numberOfEntriesSynchronous: Int
 }
