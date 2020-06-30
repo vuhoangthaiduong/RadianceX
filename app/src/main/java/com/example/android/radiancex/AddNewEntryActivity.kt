@@ -13,11 +13,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 
 class AddNewEntryActivity : AppCompatActivity() {
-    private var etJapanese: EditText? = null
-    private var etMeaning: EditText? = null
-    private var etVietnamese: EditText? = null
-    private var etEnglish: EditText? = null
-    private var diEntryViewModel: DiEntryViewModel? = null
+    private lateinit var etJapanese: EditText
+    private lateinit var etMeaning: EditText
+    private lateinit var etVietnamese: EditText
+    private lateinit var etEnglish: EditText
+    private lateinit var diEntryViewModel: DiEntryViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_entry)
@@ -45,20 +45,20 @@ class AddNewEntryActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
         if (id == R.id.save_entry) {
-            if (etJapanese!!.text.toString().isEmpty()) {
+            if (etJapanese.text.toString().isEmpty()) {
                 Toast.makeText(this, "Japanese is empty!", Toast.LENGTH_SHORT).show()
             } else {
-                val jpn = etJapanese!!.text.toString().trim { it <= ' ' }
-                val eng = etEnglish!!.text.toString().trim { it <= ' ' }
-                val meaning = etMeaning!!.text.toString().trim { it <= ' ' }
-                val vie = etVietnamese!!.text.toString().trim { it <= ' ' }
+                val jpn = etJapanese.text.toString().trim { it <= ' ' }
+                val eng = etEnglish.text.toString().trim { it <= ' ' }
+                val meaning = etMeaning.text.toString().trim { it <= ' ' }
+                val vie = etVietnamese.text.toString().trim { it <= ' ' }
                 //                Intent intent = new Intent(AddNewEntryActivity.this, DictionaryFragment.class);
 //                intent.putExtra("jpn", jpn);
 //                intent.putExtra("eng", eng);
 //                intent.putExtra("meaning", meaning);
 //                intent.putExtra("vie", vie);
 //                setResult(RESULT_OK, intent);
-                Thread(Runnable { diEntryViewModel!!.insert(DiEntry(diEntryViewModel!!.numberOfEntriesSynchronous + 1 + "", jpn, meaning, eng, vie, "")) })
+                Thread(Runnable { diEntryViewModel.insert(DiEntry((diEntryViewModel.numberOfEntriesSynchronous + 1).toString(), jpn, meaning, eng, vie, "")) })
                 val replyIntent = Intent()
                 setResult(Activity.RESULT_OK, replyIntent)
                 finish()

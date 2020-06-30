@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 class DiEntry {
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: String = null
+    var id: String? = null
 
     @ColumnInfo(name = "ja")
     var jpn: String? = null

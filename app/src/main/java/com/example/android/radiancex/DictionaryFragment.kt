@@ -16,13 +16,10 @@ import com.google.android.material.snackbar.Snackbar
 
 class DictionaryFragment : Fragment() {
     val ADD_NEW_ENTRY_ACTIVITY = 1
-    private val cvWordOfTheDay: CardView? = null
-    private val tvWordOfTheDay: TextView? = null
-    private val wordOfTheDay: String? = null
+    private lateinit var cvWordOfTheDay: CardView
+    private lateinit var tvWordOfTheDay: TextView
+    private lateinit var wordOfTheDay: String
     private var diEntryViewModel: DiEntryViewModel? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,10 +30,6 @@ class DictionaryFragment : Fragment() {
         val btnBrowse = view.findViewById<Button>(R.id.btnBrowse)
         diEntryViewModel = ViewModelProvider(this).get(DiEntryViewModel::class.java)
 
-//        new Thread(() -> {
-//            wordOfTheDay = diEntryViewModel.findDiEntryByIdSynchronous(6 + "").getJpn();
-//            tvWordOfTheDay.setText(wordOfTheDay);
-//        }).start();
         cvWordOfTheDay.setOnClickListener { v: View -> Toast.makeText(v.context, "Coming soon!", Toast.LENGTH_SHORT).show() }
         btnDailyTraining.setOnClickListener {
             val intent = Intent(activity, DailyTrainingActivity::class.java)
@@ -53,7 +46,7 @@ class DictionaryFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_NEW_ENTRY_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
-                Snackbar.make(this.view!!, data!!.getStringExtra("jpn"), Snackbar.LENGTH_LONG)
+                Snackbar.make(this.view!!, data!!.getCharSequenceExtra("jpn")!!, Snackbar.LENGTH_LONG)
                         .setAction("Close", null).show()
             }
             if (resultCode == Activity.RESULT_CANCELED) {

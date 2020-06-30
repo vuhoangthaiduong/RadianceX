@@ -10,17 +10,17 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 
 class AccountFragment : Fragment() {
-    var btnGoToAccountSettings: Button? = null
+    private lateinit var btnGoToAccountSettings: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_account, container, false)
         btnGoToAccountSettings = view.findViewById(R.id.goToAccountSettings)
-        btnGoToAccountSettings.setOnClickListener(View.OnClickListener {
+        btnGoToAccountSettings.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/vuhoangthaiduong"))
             startActivity(intent)
-        })
+        }
         return view
     }
 }

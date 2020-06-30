@@ -3,35 +3,37 @@ package com.example.android.radiancex
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 
-class DiEntryViewModel(application: Application?) : AndroidViewModel(application!!) {
-    private val mRepository: DiEntryRepository
+class DiEntryViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: DiEntryRepository
     val allEntries: LiveData<List<DiEntry>>
 
-    val allEntriesSynchronous: List<DiEntry>
-        get() = mRepository.allDiEntriesSynchronous
-
-    fun findDiEntryById(id: String?): LiveData<DiEntry> {
-        return mRepository.findDiEntryById(id)
+    init {
+        val dientriesDao = DiEntryRoomDatabase.getDatabase(application, viewModelScope).dictionaryEntryDao()
+        repository = DiEntryRepository(dientriesDao)
+        allEntries = repository.allDiEntries
     }
 
-    fun findDiEntryByIdSynchronous(id: String?): DiEntry {
-        return mRepository.findDiEntryByIdSynchronous(id)
+    val allEntriesSynchronous: List<DiEntry?>?
+        get() = repository.allDiEntriesSynchronous
+
+    fun findDiEntryById(id: String?): LiveData<DiEntry> {
+        return repository.findDiEntryById(id)
+    }
+
+    fun findDiEntryByIdSynchronous(id: String): DiEntry {
+        return repository.findDiEntryByIdSynchronous(id)
     }
 
     val numberOfEntriesSynchronous: Int
-        get() = mRepository.numberOfEntriesSynchronous
+        get() = repository.numberOfEntriesSynchronous
 
     fun insert(sentence: DiEntry?) {
-        mRepository.insert(sentence)
+        repository.insert(sentence)
     }
 
-    fun deleteAllSentences() {
-        mRepository.deleteAllEntries()
-    }
-
-    init {
-        mRepository = DiEntryRepository(application)
-        allEntries = mRepository.allDiEntries
+    suspend fun deleteAllSentences() {
+        repository.deleteAllEntries()
     }
 }

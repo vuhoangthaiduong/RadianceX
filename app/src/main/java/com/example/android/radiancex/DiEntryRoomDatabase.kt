@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 @Database(entities = [DiEntry::class], version = 1, exportSchema = false)
@@ -14,31 +16,42 @@ internal abstract class DiEntryRoomDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: DiEntryRoomDatabase? = null
-        private const val NUMBER_OF_THREADS = 4
-        val databaseWriteExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREADS)
-        @JvmStatic
-        fun getDatabase(context: Context): DiEntryRoomDatabase? {
-            if (INSTANCE == null) {
-                synchronized(DiEntryRoomDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(context.applicationContext,
-                                DiEntryRoomDatabase::class.java, "dientries")
-                                .fallbackToDestructiveMigration()
-                                .addCallback(sRoomDatabaseCallback)
-                                .createFromAsset("dictionary.db")
-                                .build()
-                    }
-                }
-            }
-            return INSTANCE
-        }
 
-        private val sRoomDatabaseCallback: Callback = object : Callback() {
-            override fun onOpen(db: SupportSQLiteDatabase) {
-                super.onOpen(db)
-                databaseWriteExecutor.execute {
-                    val dao = INSTANCE!!.dictionaryEntryDao()
-                    dao.deleteAll()
+        fun getDatabase(context: Context, scope: CoroutineScope): DiEntryRoomDatabase {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        DiEntryRoomDatabase::class.java,
+                        "dientries"
+                ).fallbackToDestructiveMigration()
+                        .addCallback(DiEntryRoomDatabaseCallback(scope))
+//                        .createFromAsset("dictionary.db")
+                        .build()
+                INSTANCE = instance
+                return instance
+            }
+        }
+    }
+
+
+    private class DiEntryRoomDatabaseCallback(
+            private val scope: CoroutineScope
+    ) : RoomDatabase.Callback() {
+
+        override fun onOpen(db: SupportSQLiteDatabase) {
+            super.onOpen(db)
+            INSTANCE?.let { database ->
+                scope.launch {
+                    var dictionaryEntryDao = database.dictionaryEntryDao()
+
+                    // Delete all content here.
+                    dictionaryEntryDao.deleteAll()
+
+                    // Add sample words.
                     val sampleStrings = arrayOfNulls<String>(4)
                     var jpn: String?
                     var eng: String?
@@ -53,7 +66,7 @@ internal abstract class DiEntryRoomDatabase : RoomDatabase() {
                         eng = sampleStrings[(Math.random() * 4).toInt()]
                         mea = sampleStrings[(Math.random() * 4).toInt()]
                         vie = sampleStrings[(Math.random() * 4).toInt()]
-                        dao.insert(DiEntry(i.toString() + "", jpn, mea, eng, vie, ""))
+                        dictionaryEntryDao.insert(DiEntry(i.toString() + "", jpn, mea, eng, vie, ""))
                     }
                 }
             }

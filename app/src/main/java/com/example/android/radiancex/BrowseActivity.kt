@@ -30,7 +30,7 @@ class BrowseActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = mAdapter
         val mDiEntryViewModel = ViewModelProvider(this).get(DiEntryViewModel::class.java)
-        mDiEntryViewModel.allEntries.observe(this, Observer<List<DiEntry?>> { diEntries: List<DiEntry?>? ->
+        mDiEntryViewModel.allEntries.observe(this, Observer<List<DiEntry>> { diEntries: List<DiEntry> ->
             // Update the cached copy of the words in the adapter.
             mAdapter.setEntries(diEntries)
         })

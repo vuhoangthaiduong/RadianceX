@@ -14,31 +14,20 @@ interface DiEntryDao {
     fun insert(entry: DiEntry?)
 
     @Query("DELETE FROM dientries")
-    fun deleteAll()
+    suspend fun deleteAll()
 
-    /*
-     * LiveData should be chosen for most use cases as running on the main thread will result in the error described on the other method
-     */
-    @get:Query("SELECT * FROM dientries")
-    val allDiEntries: LiveData<List<DiEntry?>?>?
-
-    /*
-     * If you attempt to call this method on the main thread, you will receive the following error:
-     *
-     * Caused by: java.lang.IllegalStateException: Cannot access database on the main thread since it may potentially lock the UI for a long periods of time.
-     *  at android.arch.persistence.room.RoomDatabase.assertNotMainThread(AppDatabase.java:XXX)
-     *  at android.arch.persistence.room.RoomDatabase.query(AppDatabase.java:XXX)
-     *
-     */
-    @get:Query("SELECT * FROM dientries")
-    val allDiEntriesSynchronous: List<DiEntry?>?
+    @Query("SELECT * FROM dientries")
+    fun getAllDiEntries(): LiveData<List<DiEntry>>
 
     @Query("SELECT * FROM dientries WHERE id = :id")
-    fun findDiEntryById(id: String?): LiveData<DiEntry?>?
+    fun findDiEntryById(id: String?): LiveData<DiEntry>
+
+    @Query("SELECT * FROM dientries")
+    fun getAllDiEntriesSynchronous(): List<DiEntry>
 
     @Query("SELECT * FROM dientries WHERE id = :id")
-    fun findDiEntryByIdSynchronous(id: String?): DiEntry?
+    fun findDiEntryByIdSynchronous(id: String): DiEntry
 
-    @get:Query("SELECT COUNT(*) FROM dientries")
-    val numberOfEntriesSynchronous: Int
+    @Query("SELECT COUNT(*) FROM dientries")
+    fun getNumberOfEntriesSynchronous(): Int
 }

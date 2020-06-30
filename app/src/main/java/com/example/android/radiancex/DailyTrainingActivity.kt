@@ -19,28 +19,28 @@ import java.nio.charset.StandardCharsets
 import java.util.*
 
 class DailyTrainingActivity() : AppCompatActivity() {
-    var jaSentence: TextView? = null
-    var translation: TextView? = null
-    var hint: TextView? = null
-    var id: TextView? = null
-    var totalNumberOfCards: TextView? = null
-    var btnLoadFile: Button? = null
-    var btnGetNewCollection: Button? = null
-    var btnNextWord: Button? = null
-    var switchShowJA: Switch? = null
-    var switchShowTranslation: Switch? = null
-    var switchShowHint: Switch? = null
-    var mDiEntryViewModel: DiEntryViewModel? = null
-    var progressDialog: ProgressDialog? = null
-    var handler: Handler? = null
+    lateinit var jaSentence: TextView
+    lateinit var translation: TextView
+    lateinit var hint: TextView
+    lateinit var id: TextView
+    lateinit var totalNumberOfCards: TextView
+    lateinit var btnLoadFile: Button
+    lateinit var btnGetNewCollection: Button
+    lateinit var btnNextWord: Button
+    lateinit var switchShowJA: Switch
+    lateinit var switchShowTranslation: Switch
+    lateinit var switchShowHint: Switch
+    lateinit var mDiEntryViewModel: DiEntryViewModel
+    lateinit var progressDialog: ProgressDialog
+    lateinit var handler: Handler
     private var currentDeck: ArrayList<DiEntry>? = null
     private var currentSentence: DiEntry? = null
     private var entryCount = 0
-    val DECK_SIZE = 20
-    val ID_FIELD_CODE = 0
-    val JAPANESE_FIELD_CODE = 1
-    val VIETNAMESE_FIELD_CODE = 2
-    val NOTE_FIELD_CODE = 3
+    private val DECK_SIZE = 20
+    private val ID_FIELD_CODE = 0
+    private val JAPANESE_FIELD_CODE = 1
+    private val VIETNAMESE_FIELD_CODE = 2
+    private val NOTE_FIELD_CODE = 3
 
     companion object {
         init {
@@ -82,12 +82,12 @@ class DailyTrainingActivity() : AppCompatActivity() {
         mDiEntryViewModel = ViewModelProvider(this).get(DiEntryViewModel::class.java)
         currentDeck = ArrayList()
         initializeData()
-        mDiEntryViewModel!!.allEntries.observe(this, androidx.lifecycle.Observer<List<DiEntry?>?> { sentences ->
-            totalNumberOfCards.setText(sentences!!.size.toString() + "")
+        mDiEntryViewModel.allEntries.observe(this, androidx.lifecycle.Observer<List<DiEntry?>?> { sentences ->
+            totalNumberOfCards.setText(sentences?.size.toString())
             generateNewDeck()
             goToNextWord()
         })
-        btnLoadFile.setOnClickListener(View.OnClickListener { v: View? ->
+        btnLoadFile.setOnClickListener {
             btnLoadFile.setEnabled(false)
             btnGetNewCollection.setEnabled(true)
             btnNextWord.setEnabled(true)
@@ -96,7 +96,7 @@ class DailyTrainingActivity() : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        })
+        }
         btnGetNewCollection.setOnClickListener(View.OnClickListener { v: View? ->
             generateNewDeck()
             Toast.makeText(this, "New deck generated", Toast.LENGTH_SHORT).show()
@@ -149,13 +149,13 @@ class DailyTrainingActivity() : AppCompatActivity() {
 
     @Throws(IOException::class)
     fun populateDatabaseFromFile() {
-        handler!!.post({
+        handler!!.post {
             progressDialog = ProgressDialog(this)
             progressDialog!!.setCancelable(false)
             progressDialog!!.setMessage("Populating database")
             progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
             progressDialog!!.show()
-        })
+        }
         try {
             BufferedReader(InputStreamReader(this.assets.open("BST Câu.tsv"), StandardCharsets.UTF_8)).use { bufferedReader ->
                 var line: String
@@ -194,16 +194,16 @@ class DailyTrainingActivity() : AppCompatActivity() {
 
     fun generateNewDeck() {
         currentDeck!!.clear()
-        handler!!.post({
+        handler!!.post {
             progressDialog = ProgressDialog(this)
             progressDialog!!.setCancelable(false)
             progressDialog!!.setMessage("Generating new deck")
             progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
             progressDialog!!.show()
-        })
+        }
         Thread(Runnable {
             for (i in 0 until DECK_SIZE) {
-                currentDeck!!.add(mDiEntryViewModel!!.findDiEntryByIdSynchronous((Math.random() * entryCount) as Int.toString() + ""))
+                currentDeck!!.add(mDiEntryViewModel!!.findDiEntryByIdSynchronous(((Math.random() * entryCount).toInt()).toString()))
             }
             handler!!.post(Runnable { progressDialog!!.dismiss() })
         }).start()

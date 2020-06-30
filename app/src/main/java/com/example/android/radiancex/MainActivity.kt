@@ -14,8 +14,8 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private var floatingActionsMenu: FloatingActionsMenu? = null
-    private var tvScreenname: TextView? = null
+    private lateinit var floatingActionsMenu: FloatingActionsMenu
+    private lateinit var tvScreenname: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -49,40 +49,40 @@ class MainActivity : AppCompatActivity() {
         val fragment: Fragment
         when (item.itemId) {
             R.id.action_dictionary -> {
-                floatingActionsMenu!!.visibility = View.VISIBLE
-                if (floatingActionsMenu!!.isExpanded) floatingActionsMenu!!.collapse()
+                floatingActionsMenu.visibility = View.VISIBLE
+                if (floatingActionsMenu.isExpanded) floatingActionsMenu.collapse()
                 fragment = DictionaryFragment()
-                tvScreenname!!.setText(R.string.dictionary)
+                tvScreenname.setText(R.string.dictionary)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.action_ask -> {
-                floatingActionsMenu!!.visibility = View.VISIBLE
-                if (floatingActionsMenu!!.isExpanded) floatingActionsMenu!!.collapse()
+                floatingActionsMenu.visibility = View.VISIBLE
+                if (floatingActionsMenu.isExpanded) floatingActionsMenu.collapse()
                 fragment = AskFragment()
-                tvScreenname!!.setText(R.string.ask)
+                tvScreenname.setText(R.string.ask)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.action_blog -> {
-                floatingActionsMenu!!.visibility = View.VISIBLE
-                if (floatingActionsMenu!!.isExpanded) floatingActionsMenu!!.collapse()
+                floatingActionsMenu.visibility = View.VISIBLE
+                if (floatingActionsMenu.isExpanded) floatingActionsMenu.collapse()
                 fragment = BlogFragment()
-                tvScreenname!!.setText(R.string.blog)
+                tvScreenname.setText(R.string.blog)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.action_inbox -> {
-                floatingActionsMenu!!.visibility = View.GONE
+                floatingActionsMenu.visibility = View.GONE
                 fragment = InboxFragment()
-                tvScreenname!!.setText(R.string.inbox)
+                tvScreenname.setText(R.string.inbox)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.action_account -> {
-                floatingActionsMenu!!.visibility = View.GONE
+                floatingActionsMenu.visibility = View.GONE
                 fragment = AccountFragment()
-                tvScreenname!!.setText(R.string.account)
+                tvScreenname.setText(R.string.account)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
