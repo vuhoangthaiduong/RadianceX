@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val btnNewQuestion = findViewById<FloatingActionButton>(R.id.action_new_question)
         btnNewEntry.setOnClickListener { v: View? ->
             val intent = Intent(this, AddNewEntryActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
         }
         btnNewQuestion.setOnClickListener { v: View? -> Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show() }
         btnNewPost.setOnClickListener { v: View? -> Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show() }
@@ -34,6 +34,11 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         loadFragment(DictionaryFragment())
         tvScreenname.setText(R.string.dictionary)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (floatingActionsMenu.isExpanded) floatingActionsMenu.collapse()
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -2,16 +2,15 @@ package com.example.android.radiancex
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "dientries")
 class DiEntry {
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: String? = null
+    lateinit var id: String
 
-    @ColumnInfo(name = "ja")
+    @ColumnInfo(name = "jpn")
     var jpn: String? = null
 
     @ColumnInfo(name = "meaning")
@@ -29,22 +28,15 @@ class DiEntry {
     @ColumnInfo(name = "favourite")
     var isFavourite = false
 
-    @Ignore
-    constructor() {
-    }
+    constructor()
 
-    @Ignore
-    constructor(id: String) {
-        this.id = id
-    }
-
-    constructor(id: String, jpn: String?, meaning: String?, eng: String?, vie: String?, note: String?) {
-        this.id = id
-        this.jpn = jpn
-        this.meaning = meaning
-        this.eng = eng
-        this.vie = vie
-        this.note = note
+    constructor(_id: String, _jpn: String?, _meaning: String?, _eng: String?, _vie: String?, _note: String?) {
+        this.id = _id
+        this.jpn = _jpn
+        this.meaning = _meaning
+        this.eng = _eng
+        this.vie = _vie
+        this.note = _note
     }
 
 }

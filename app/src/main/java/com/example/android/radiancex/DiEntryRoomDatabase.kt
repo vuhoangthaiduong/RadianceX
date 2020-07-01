@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
-@Database(entities = [DiEntry::class], version = 1, exportSchema = false)
+@Database(entities = arrayOf(DiEntry::class), version = 2, exportSchema = false)
 internal abstract class DiEntryRoomDatabase : RoomDatabase() {
     abstract fun dictionaryEntryDao(): DiEntryDao
 

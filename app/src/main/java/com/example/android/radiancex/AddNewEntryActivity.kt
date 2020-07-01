@@ -52,13 +52,9 @@ class AddNewEntryActivity : AppCompatActivity() {
                 val eng = etEnglish.text.toString().trim { it <= ' ' }
                 val meaning = etMeaning.text.toString().trim { it <= ' ' }
                 val vie = etVietnamese.text.toString().trim { it <= ' ' }
-                //                Intent intent = new Intent(AddNewEntryActivity.this, DictionaryFragment.class);
-//                intent.putExtra("jpn", jpn);
-//                intent.putExtra("eng", eng);
-//                intent.putExtra("meaning", meaning);
-//                intent.putExtra("vie", vie);
-//                setResult(RESULT_OK, intent);
-                Thread(Runnable { diEntryViewModel.insert(DiEntry((diEntryViewModel.numberOfEntriesSynchronous + 1).toString(), jpn, meaning, eng, vie, "")) })
+                Thread {
+                    diEntryViewModel.insert(DiEntry((diEntryViewModel.numberOfEntriesSynchronous + 1).toString(), jpn, meaning, eng, vie, ""))
+                }
                 val replyIntent = Intent()
                 setResult(Activity.RESULT_OK, replyIntent)
                 finish()

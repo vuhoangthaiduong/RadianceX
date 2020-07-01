@@ -11,7 +11,7 @@ interface DiEntryDao {
     // allowing the insert of the same word multiple times by passing a
     // conflict resolution strategy
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(entry: DiEntry?)
+    suspend fun insert(entry: DiEntry)
 
     @Query("DELETE FROM dientries")
     suspend fun deleteAll()

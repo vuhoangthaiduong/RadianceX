@@ -42,23 +42,6 @@ class DailyTrainingActivity() : AppCompatActivity() {
     private val VIETNAMESE_FIELD_CODE = 2
     private val NOTE_FIELD_CODE = 3
 
-    companion object {
-        init {
-            System.setProperty(
-                    "org.apache.poi.javax.xml.stream.XMLInputFactory",
-                    "com.fasterxml.aalto.stax.InputFactoryImpl"
-            )
-            System.setProperty(
-                    "org.apache.poi.javax.xml.stream.XMLOutputFactory",
-                    "com.fasterxml.aalto.stax.OutputFactoryImpl"
-            )
-            System.setProperty(
-                    "org.apache.poi.javax.xml.stream.XMLEventFactory",
-                    "com.fasterxml.aalto.stax.EventFactoryImpl"
-            )
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daily_training)
@@ -135,13 +118,13 @@ class DailyTrainingActivity() : AppCompatActivity() {
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
-                btnLoadFile!!.setEnabled(true)
-                btnGetNewCollection!!.setEnabled(false)
-                btnNextWord!!.setEnabled(false)
+                btnLoadFile!!.isEnabled = true
+                btnGetNewCollection!!.isEnabled = false
+                btnNextWord!!.isEnabled = false
             } else {
-                btnLoadFile!!.setEnabled(false)
-                btnGetNewCollection!!.setEnabled(true)
-                btnNextWord!!.setEnabled(true)
+                btnLoadFile!!.isEnabled = false
+                btnGetNewCollection!!.isEnabled = true
+                btnNextWord!!.isEnabled = true
             }
             generateNewDeck()
         }).start()
@@ -174,11 +157,10 @@ class DailyTrainingActivity() : AppCompatActivity() {
                     vietnamese = if (fields.size >= 3) fields.get(VIETNAMESE_FIELD_CODE) else ""
                     note = if (fields.size >= 4) fields.get(NOTE_FIELD_CODE) else ""
                     mDiEntryViewModel!!.insert(DiEntry(id, japanese, "", "", vietnamese, note))
-                    Log.d("Fields ----", id + "|" + japanese + "|" + vietnamese + "|" + note)
+                    Log.d("Fields ----", "$id|$japanese|$vietnamese|$note")
                     //                    mDiEntryViewModel.insert(new DiEntry(count + "", "", "", "", "", ""));
 //                    Log.e("Entry count", "finished, count: " + mDiEntryViewModel.getNumberOfEntriesSynchronous());
                     count++
-                    Thread.sleep(3)
                 }
                 entryCount = mDiEntryViewModel!!.numberOfEntriesSynchronous
                 handler!!.post(Runnable {
@@ -205,8 +187,9 @@ class DailyTrainingActivity() : AppCompatActivity() {
             for (i in 0 until DECK_SIZE) {
                 currentDeck!!.add(mDiEntryViewModel!!.findDiEntryByIdSynchronous(((Math.random() * entryCount).toInt()).toString()))
             }
-            handler!!.post(Runnable { progressDialog!!.dismiss() })
+
         }).start()
+        handler!!.post(Runnable { progressDialog!!.dismiss() })
     }
 
     fun goToNextWord() {
