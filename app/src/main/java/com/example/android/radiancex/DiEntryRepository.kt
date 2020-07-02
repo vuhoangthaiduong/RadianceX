@@ -8,8 +8,13 @@ class DiEntryRepository(private val diEntryDao: DiEntryDao) {
 
     val allDiEntries: LiveData<List<DiEntry>> = diEntryDao.getAllDiEntries()
 
+    val numberOfEntries: LiveData<Int> = diEntryDao.getNumberOfEntries()
+
     val allDiEntriesSynchronous: List<DiEntry>
         get() = diEntryDao.getAllDiEntriesSynchronous()
+
+    val numberOfEntriesSynchronous: Int
+        get() = diEntryDao.getNumberOfEntriesSynchronous()
 
     fun findDiEntryById(id: String?): LiveData<DiEntry> {
         return diEntryDao.findDiEntryById(id)
@@ -18,9 +23,6 @@ class DiEntryRepository(private val diEntryDao: DiEntryDao) {
     fun findDiEntryByIdSynchronous(id: String): DiEntry {
         return diEntryDao.findDiEntryByIdSynchronous(id)
     }
-
-    val numberOfEntriesSynchronous: Int
-        get() = diEntryDao.getNumberOfEntriesSynchronous()
 
     suspend fun deleteAllEntries() {
         diEntryDao.deleteAll()

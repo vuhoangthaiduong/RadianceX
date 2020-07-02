@@ -22,6 +22,9 @@ interface DiEntryDao {
     @Query("SELECT * FROM dientries WHERE id = :id")
     fun findDiEntryById(id: String?): LiveData<DiEntry>
 
+    @Query("SELECT COUNT(*) FROM dientries")
+    fun getNumberOfEntries(): LiveData<Int>
+
     @Query("SELECT * FROM dientries")
     fun getAllDiEntriesSynchronous(): List<DiEntry>
 
