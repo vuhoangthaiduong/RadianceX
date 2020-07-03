@@ -1,5 +1,6 @@
 package com.example.android.radiancex
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "dientries")
 class DiEntry {
     @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "id")
     lateinit var id: String
 

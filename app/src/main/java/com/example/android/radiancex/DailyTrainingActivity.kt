@@ -34,6 +34,7 @@ class DailyTrainingActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mDiEntryViewModel = ViewModelProvider(this).get(DiEntryViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_daily_training)
         binding.viewmodel = mDiEntryViewModel
 
@@ -43,15 +44,8 @@ class DailyTrainingActivity() : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         handler = Handler()
-        mDiEntryViewModel = ViewModelProvider(this).get(DiEntryViewModel::class.java)
         currentDeck = ArrayList()
         initializeData()
-
-        mDiEntryViewModel.allEntries.observe(this, androidx.lifecycle.Observer<List<DiEntry?>?> { sentences ->
-            binding.totalNumberOfCards.text = sentences?.size.toString()
-            generateNewDeck()
-            mDiEntryViewModel.onNext()
-        })
 
         binding.apply {
             btnLoadFile.setOnClickListener {
@@ -69,7 +63,7 @@ class DailyTrainingActivity() : AppCompatActivity() {
                 Toast.makeText(applicationContext, "New deck generated", Toast.LENGTH_SHORT).show()
             })
 
-            btnNextWord.setOnClickListener { v: View? -> mDiEntryViewModel.onNext() }
+            btnNextWord.setOnClickListener { v: View? -> mDiEntryViewModel.onGoToNext() }
 
             switchShowJpn.setOnClickListener { v: View? ->
                 if (currentSentence != null) {
