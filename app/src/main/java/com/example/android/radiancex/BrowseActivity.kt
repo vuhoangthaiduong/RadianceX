@@ -17,7 +17,7 @@ class BrowseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_browse)
         val mToolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(mToolbar)
-        supportActionBar!!.setTitle("Browse")
+        supportActionBar!!.title = "Browse"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val mAdapter = EntryRecyclerViewAdapter()
         val recyclerView = findViewById<View>(R.id.entry_recycler_view) as RecyclerView

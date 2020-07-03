@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
-                        android:text="@{viewmodel.numberOfEntries}" />
+                        android:text="@{viewmodel.numberOfEntries.toString()}" />
 
                     <TextView
                         android:id="@+id/tvIdLabel"
@@ -296,7 +296,7 @@
                 android:layout_weight="1"
                 android:enabled="false"
                 android:text="@string/next"
-                android:onClick="@{() -> viewmodel.onNext()}"/>
+                android:onClick="@{() -> viewmodel.onGoToNext()}"/>
 
         </LinearLayout>
 
