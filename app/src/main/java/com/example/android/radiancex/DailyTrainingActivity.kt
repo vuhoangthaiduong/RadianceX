@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.android.radiancex.database.DiEntry
 import com.example.android.radiancex.databinding.ActivityDailyTrainingBinding
 import java.io.BufferedReader
 import java.io.IOException
@@ -139,7 +140,7 @@ class DailyTrainingActivity() : AppCompatActivity() {
                     japanese = if (fields.size >= 2) fields.get(JAPANESE_FIELD_CODE) else ""
                     vietnamese = if (fields.size >= 3) fields.get(VIETNAMESE_FIELD_CODE) else ""
                     note = if (fields.size >= 4) fields.get(NOTE_FIELD_CODE) else ""
-                    mDiEntryViewModel!!.insert(DiEntry(id, japanese, "", "", vietnamese, note))
+                    mDiEntryViewModel!!.insert(DiEntry(japanese, "", "", vietnamese, note))
                     Log.d("Fields ----", "$id|$japanese|$vietnamese|$note")
                     //                    mDiEntryViewModel.insert(new DiEntry(count + "", "", "", "", "", ""));
 //                    Log.e("Entry count", "finished, count: " + mDiEntryViewModel.getNumberOfEntriesSynchronous());
