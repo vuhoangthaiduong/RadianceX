@@ -287,7 +287,8 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:enabled="false"
-                android:text="@string/shuffle" />
+                android:text="@string/shuffle"
+                android:onClick="@{() -> viewmodel.onGetNewDeck()}"/>
 
             <Button
                 android:id="@+id/btnNextWord"

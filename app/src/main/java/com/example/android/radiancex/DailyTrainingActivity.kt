@@ -45,7 +45,7 @@ class DailyTrainingActivity() : AppCompatActivity() {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         handler = Handler()
         currentDeck = ArrayList()
-        initializeData()
+//        initializeData()
 
         binding.apply {
             btnLoadFile.setOnClickListener {
