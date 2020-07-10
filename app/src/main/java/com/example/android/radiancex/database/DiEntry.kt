@@ -7,6 +7,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "dientries")
 data class DiEntry(
+        @PrimaryKey(autoGenerate = true)
+        @NonNull
+        @ColumnInfo(name = "id")
+        var id: Int = 0,
+
         @ColumnInfo(name = "jpn")
         var jpn: String? = null,
 
@@ -22,11 +27,6 @@ data class DiEntry(
         @ColumnInfo(name = "note")
         var note: String? = null
 ) {
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
-    @ColumnInfo(name = "id")
-    var id: Long = 0L
-
     @ColumnInfo(name = "favourite")
     var isFavourite: Boolean = false
 }

@@ -1,5 +1,6 @@
 package com.example.android.radiancex
 
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.example.android.radiancex.database.DiEntry
 import com.example.android.radiancex.database.DiEntryDao
@@ -16,11 +17,11 @@ class DiEntryRepository(private val diEntryDao: DiEntryDao) {
     val numberOfEntriesSynchronous: Int
         get() = diEntryDao.getNumberOfEntriesSynchronous()
 
-    fun findDiEntryById(id: Long?): LiveData<DiEntry> {
+    fun findDiEntryById(id: Int?): LiveData<DiEntry> {
         return diEntryDao.findDiEntryById(id)
     }
 
-    fun findDiEntryByIdSynchronous(id: Long): DiEntry {
+    fun findDiEntryByIdSynchronous(id: Int): DiEntry {
         return diEntryDao.findDiEntryByIdSynchronous(id)
     }
 
@@ -28,7 +29,8 @@ class DiEntryRepository(private val diEntryDao: DiEntryDao) {
         diEntryDao.deleteAll()
     }
 
-    fun insert(entry: DiEntry) {
+    @WorkerThread
+    suspend fun insert(entry: DiEntry) {
         diEntryDao.insert(entry)
     }
 }

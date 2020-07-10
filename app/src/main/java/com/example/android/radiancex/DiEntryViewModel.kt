@@ -7,9 +7,10 @@ import com.example.android.radiancex.database.DiEntry
 import com.example.android.radiancex.database.DiEntryRoomDatabase
 import kotlinx.coroutines.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class DiEntryViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: DiEntryRepository
+    private var repository: DiEntryRepository
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     private var _currentDeck = MutableLiveData<ArrayList<DiEntry>>()
@@ -19,7 +20,7 @@ class DiEntryViewModel(application: Application) : AndroidViewModel(application)
     var currentSentence: LiveData<DiEntry>
         get() = _currentSentence
 
-    private lateinit var cardViewHistoryStack: Stack<Long>
+    private lateinit var cardViewHistoryStack: Stack<Int>
 
     lateinit var allEntries: LiveData<List<DiEntry>>
     var numberOfEntries = Transformations.map(allEntries) { entries ->
@@ -37,19 +38,18 @@ class DiEntryViewModel(application: Application) : AndroidViewModel(application)
 
     private fun initialize() {
         uiScope.launch {
-            _currentDeck.value = getNewDeckFromDatabase()
+//            _currentDeck.value = getNewDeckFromDatabase()
+//            _currentSentence.value = getNewCurrentSentence()
+            val deferredResult: Deferred<ArrayList<DiEntry>> = uiScope.async {
+                getNewDeckFromDatabase()
+            }
+            _currentDeck.value = deferredResult.await()
             _currentSentence.value = getNewCurrentSentence()
         }
     }
 
-    val allEntriesSynchronous: List<DiEntry?>?
-        get() = repository.allDiEntriesSynchronous
 
-    fun findDiEntryById(id: Long?): LiveData<DiEntry> {
-        return repository.findDiEntryById(id)
-    }
-
-    fun findDiEntryByIdSynchronous(id: Long): DiEntry {
+    fun findDiEntryByIdSynchronous(id: Int): DiEntry {
         return repository.findDiEntryByIdSynchronous(id)
     }
 
@@ -85,7 +85,7 @@ class DiEntryViewModel(application: Application) : AndroidViewModel(application)
 ////                tempDeck.add(DiEntry(jpn, mea, eng, vie))
 //            }
             for (i in 0 until deckSize) {
-                tempDeck.add(findDiEntryByIdSynchronous((0..numberOfEntriesSynchronous.toLong()).random()))
+                tempDeck.add(findDiEntryByIdSynchronous((0..numberOfEntriesSynchronous).random()))
             }
             Log.d("tempDeckLiveData size: ", tempDeck.size.toString())
             return@withContext tempDeck

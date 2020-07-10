@@ -65,7 +65,7 @@ internal abstract class DiEntryRoomDatabase : RoomDatabase() {
                         eng = sampleStrings[(Math.random() * 4).toInt()]
                         mea = sampleStrings[(Math.random() * 4).toInt()]
                         vie = sampleStrings[(Math.random() * 4).toInt()]
-                        dictionaryEntryDao.insert(DiEntry(jpn, mea, eng, vie, ""))
+                        dictionaryEntryDao.insert(DiEntry(0, jpn, mea, eng, vie, ""))
                     }
                 }
             }
