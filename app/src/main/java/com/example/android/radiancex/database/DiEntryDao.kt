@@ -1,4 +1,4 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -10,17 +10,17 @@ import androidx.room.Query
 interface DiEntryDao {
     // allowing the insert of the same word multiple times by passing a
     // conflict resolution strategy
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entry: DiEntry)
 
     @Query("DELETE FROM dientries")
-    suspend fun deleteAll()
+    fun deleteAll()
 
     @Query("SELECT * FROM dientries")
     fun getAllDiEntries(): LiveData<List<DiEntry>>
 
     @Query("SELECT * FROM dientries WHERE id = :id")
-    fun findDiEntryById(id: String?): LiveData<DiEntry>
+    fun findDiEntryById(id: Int?): LiveData<DiEntry>
 
     @Query("SELECT COUNT(*) FROM dientries")
     fun getNumberOfEntries(): LiveData<Int>
@@ -29,7 +29,7 @@ interface DiEntryDao {
     fun getAllDiEntriesSynchronous(): List<DiEntry>
 
     @Query("SELECT * FROM dientries WHERE id = :id")
-    fun findDiEntryByIdSynchronous(id: String): DiEntry
+    fun findDiEntryByIdSynchronous(id: Int): DiEntry
 
     @Query("SELECT COUNT(*) FROM dientries")
     fun getNumberOfEntriesSynchronous(): Int

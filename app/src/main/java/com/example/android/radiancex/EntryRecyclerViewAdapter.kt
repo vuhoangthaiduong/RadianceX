@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.radiancex.EntryRecyclerViewAdapter.EntryViewHolder
+import com.example.android.radiancex.database.DiEntry
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].

@@ -1,4 +1,4 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.database
 
 import android.content.Context
 import androidx.room.Database
@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import java.util.concurrent.Executors
 
 @Database(entities = arrayOf(DiEntry::class), version = 2, exportSchema = false)
 internal abstract class DiEntryRoomDatabase : RoomDatabase() {
@@ -66,7 +65,7 @@ internal abstract class DiEntryRoomDatabase : RoomDatabase() {
                         eng = sampleStrings[(Math.random() * 4).toInt()]
                         mea = sampleStrings[(Math.random() * 4).toInt()]
                         vie = sampleStrings[(Math.random() * 4).toInt()]
-                        dictionaryEntryDao.insert(DiEntry(i.toString(), jpn, mea, eng, vie, ""))
+                        dictionaryEntryDao.insert(DiEntry(0, jpn, mea, eng, vie, ""))
                     }
                 }
             }

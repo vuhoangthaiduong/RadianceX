@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.android.radiancex.database.DiEntry
 import com.example.android.radiancex.databinding.ActivityDailyTrainingBinding
 import java.io.BufferedReader
 import java.io.IOException
@@ -51,19 +52,19 @@ class DailyTrainingActivity() : AppCompatActivity() {
             btnLoadFile.setOnClickListener {
                 btnLoadFile.isEnabled = false
                 btnGetNewDeck.isEnabled = true
-                btnNextWord.isEnabled = true
+                btnNext.isEnabled = true
                 try {
-                    populateDatabaseFromFile()
+//                    populateDatabaseFromFile()
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
             }
             btnGetNewDeck.setOnClickListener(View.OnClickListener {
-                mDiEntryViewModel.onGetNewDeck()
+//                mDiEntryViewModel.onGetNewDeck()
                 Toast.makeText(applicationContext, "New deck generated", Toast.LENGTH_SHORT).show()
             })
 
-            btnNextWord.setOnClickListener { v: View? -> mDiEntryViewModel.onGoToNext() }
+            btnNext.setOnClickListener { v: View? -> mDiEntryViewModel.onGoToNext() }
 
             switchShowJpn.setOnClickListener { v: View? ->
                 if (currentSentence != null) {
@@ -85,94 +86,48 @@ class DailyTrainingActivity() : AppCompatActivity() {
 
     }
 
-    private fun initializeData() {
-        progressDialog = ProgressDialog(this)
-        progressDialog.setMessage("Initializing")
-        progressDialog.setCancelable(false)
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
-        progressDialog.show()
-        Thread(Runnable {
-            entryCount = mDiEntryViewModel.numberOfEntriesSynchronous
-            handler.post(Runnable { progressDialog.dismiss() })
-            if (entryCount == 0) {
-                handler.post(Runnable { Toast.makeText(this, "Database empty", Toast.LENGTH_LONG).show() })
-                try {
-                    populateDatabaseFromFile()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-                binding.btnNextWord!!.isEnabled = true
-                binding.btnGetNewDeck!!.isEnabled = false
-                binding.btnNextWord!!.isEnabled = false
-            } else {
-                binding.btnNextWord!!.isEnabled = false
-                binding.btnGetNewDeck!!.isEnabled = true
-                binding.btnNextWord!!.isEnabled = true
-            }
-            generateNewDeck()
-        }).start()
-    }
-
-    @Throws(IOException::class)
-    fun populateDatabaseFromFile() {
-        handler!!.post {
-            progressDialog = ProgressDialog(this)
-            progressDialog!!.setCancelable(false)
-            progressDialog!!.setMessage("Populating database")
-            progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
-            progressDialog!!.show()
-        }
-        try {
-            BufferedReader(InputStreamReader(this.assets.open("BST Câu.tsv"), StandardCharsets.UTF_8)).use { bufferedReader ->
-                var line: String
-                var fields: Array<String>
-                var id: String
-                var japanese: String
-                var meaning: String?
-                var english: String?
-                var vietnamese: String
-                var note: String
-                var count: Int = 0
-                while ((bufferedReader.readLine().also { line = it }) != null) {
-                    fields = line.split("\t".toRegex()).toTypedArray()
-                    id = if (fields.size >= 1) fields.get(ID_FIELD_CODE) else ""
-                    japanese = if (fields.size >= 2) fields.get(JAPANESE_FIELD_CODE) else ""
-                    vietnamese = if (fields.size >= 3) fields.get(VIETNAMESE_FIELD_CODE) else ""
-                    note = if (fields.size >= 4) fields.get(NOTE_FIELD_CODE) else ""
-                    mDiEntryViewModel!!.insert(DiEntry(id, japanese, "", "", vietnamese, note))
-                    Log.d("Fields ----", "$id|$japanese|$vietnamese|$note")
-                    //                    mDiEntryViewModel.insert(new DiEntry(count + "", "", "", "", "", ""));
-//                    Log.e("Entry count", "finished, count: " + mDiEntryViewModel.getNumberOfEntriesSynchronous());
-                    count++
-                }
-                entryCount = mDiEntryViewModel!!.numberOfEntriesSynchronous
-                handler!!.post(Runnable {
-                    progressDialog!!.dismiss()
-                    Toast.makeText(this, entryCount.toString() + " entries imported", Toast.LENGTH_SHORT).show()
-                })
-                Thread(Runnable { Log.d("Database population - ", "Finished, count: " + entryCount) }).start()
-            }
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-    }
-
-    fun generateNewDeck() {
-        currentDeck!!.clear()
-        handler!!.post {
-            progressDialog = ProgressDialog(this)
-            progressDialog!!.setCancelable(false)
-            progressDialog!!.setMessage("Generating new deck")
-            progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
-            progressDialog!!.show()
-        }
-        Thread(Runnable {
-            for (i in 0 until DECK_SIZE) {
-                currentDeck!!.add(mDiEntryViewModel!!.findDiEntryByIdSynchronous(((Math.random() * entryCount).toInt()).toString()))
-            }
-
-        }).start()
-        handler!!.post(Runnable { progressDialog!!.dismiss() })
-    }
+//    @Throws(IOException::class)
+//    fun populateDatabaseFromFile() {
+//        handler!!.post {
+//            progressDialog = ProgressDialog(this)
+//            progressDialog!!.setCancelable(false)
+//            progressDialog!!.setMessage("Populating database")
+//            progressDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
+//            progressDialog!!.show()
+//        }
+//        try {
+//            BufferedReader(InputStreamReader(this.assets.open("BST Câu.tsv"), StandardCharsets.UTF_8)).use { bufferedReader ->
+//                var line: String
+//                var fields: Array<String>
+//                var id: String
+//                var japanese: String
+//                var meaning: String?
+//                var english: String?
+//                var vietnamese: String
+//                var note: String
+//                var count: Int = 0
+//                while ((bufferedReader.readLine().also { line = it }) != null) {
+//                    fields = line.split("\t".toRegex()).toTypedArray()
+//                    id = if (fields.size >= 1) fields.get(ID_FIELD_CODE) else ""
+//                    japanese = if (fields.size >= 2) fields.get(JAPANESE_FIELD_CODE) else ""
+//                    vietnamese = if (fields.size >= 3) fields.get(VIETNAMESE_FIELD_CODE) else ""
+//                    note = if (fields.size >= 4) fields.get(NOTE_FIELD_CODE) else ""
+//                    mDiEntryViewModel!!.insert(DiEntry(japanese, "", "", vietnamese, note))
+//                    Log.d("Fields ----", "$id|$japanese|$vietnamese|$note")
+//                    //                    mDiEntryViewModel.insert(new DiEntry(count + "", "", "", "", "", ""));
+////                    Log.e("Entry count", "finished, count: " + mDiEntryViewModel.getNumberOfEntriesSynchronous());
+//                    count++
+//                }
+//                entryCount = mDiEntryViewModel!!.numberOfEntriesSynchronous
+//                handler!!.post(Runnable {
+//                    progressDialog!!.dismiss()
+//                    Toast.makeText(this, entryCount.toString() + " entries imported", Toast.LENGTH_SHORT).show()
+//                })
+//                Thread(Runnable { Log.d("Database population - ", "Finished, count: " + entryCount) }).start()
+//            }
+//        } catch (e: InterruptedException) {
+//            e.printStackTrace()
+//        }
+//    }
 
 }

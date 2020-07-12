@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
-                        android:text="@{viewmodel.numberOfEntries.toString()}" />
+                        android:text="@{String.valueOf(viewmodel.numberOfEntries)}" />
 
                     <TextView
                         android:id="@+id/tvIdLabel"
@@ -282,6 +282,15 @@
                 android:text="@string/load_file" />
 
             <Button
+                android:id="@+id/btnPrevious"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/previous"
+                android:onClick="@{() -> viewmodel.onGoToPrevious()}"/>
+
+            <Button
                 android:id="@+id/btnGetNewDeck"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
@@ -291,7 +300,7 @@
                 android:onClick="@{() -> viewmodel.onGetNewDeck()}"/>
 
             <Button
-                android:id="@+id/btnNextWord"
+                android:id="@+id/btnNext"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_weight="1"

@@ -30,5 +30,6 @@
     <string name="shuffle">Shuffle</string>
     <string name="word_of_the_day">Word of the day</string>
     <string name="number_of_cards">Number of cards</string>
+    <string name="previous">Previous</string>
 
 </resources>
