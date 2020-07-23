@@ -23,9 +23,9 @@ class DiEntryViewModel(application: Application) : AndroidViewModel(application)
     private lateinit var cardViewHistoryStack: Stack<Int>
 
     lateinit var allEntries: LiveData<List<DiEntry>>
-    var numberOfEntries = Transformations.map(allEntries) { entries ->
-        entries.size
-    }
+//    var numberOfEntries = Transformations.map(allEntries) { entries ->
+//        entries.size
+//    }
 
     init {
         initialize()

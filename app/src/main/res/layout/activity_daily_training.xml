@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
-                        android:text="@{String.valueOf(viewmodel.numberOfEntries)}" />
+                        android:text=" " />
 
                     <TextView
                         android:id="@+id/tvIdLabel"
@@ -288,8 +288,7 @@
                 android:layout_weight="1"
                 android:enabled="false"
                 android:text="@string/previous"
-                android:onClick="@{() -> viewmodel.onGoToPrevious()}"/>
-
+                />
             <Button
                 android:id="@+id/btnGetNewDeck"
                 android:layout_width="0dp"
@@ -297,8 +296,7 @@
                 android:layout_weight="1"
                 android:enabled="false"
                 android:text="@string/shuffle"
-                android:onClick="@{() -> viewmodel.onGetNewDeck()}"/>
-
+                />
             <Button
                 android:id="@+id/btnNext"
                 android:layout_width="0dp"
@@ -306,8 +304,7 @@
                 android:layout_weight="1"
                 android:enabled="false"
                 android:text="@string/next"
-                android:onClick="@{() -> viewmodel.onGoToNext()}"/>
-
+                />
         </LinearLayout>
 
     </RelativeLayout>

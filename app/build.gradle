@@ -3,17 +3,17 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "com.example.android.radiancex"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         android.defaultConfig.vectorDrawables.useSupportLibrary = true
     }
 
@@ -32,8 +32,8 @@ android {
         exclude 'META-INF/atomicfu.kotlin_module'
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
 }
 
@@ -48,7 +48,7 @@ dependencies {
     // RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     //Glide
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
     //RFAB
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 // Room components

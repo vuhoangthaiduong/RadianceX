@@ -54,7 +54,7 @@ class AddNewEntryActivity : AppCompatActivity() {
                 val meaning = etMeaning.text.toString().trim { it <= ' ' }
                 val vie = etVietnamese.text.toString().trim { it <= ' ' }
                 Thread {
-                    diEntryViewModel.insert(DiEntry((diEntryViewModel.numberOfEntriesSynchronous + 1).toString(), jpn, meaning, eng, vie, ""))
+//                    diEntryViewModel.insert(DiEntry((diEntryViewModel.numberOfEntriesSynchronous + 1).toString(), jpn, meaning, eng, vie, ""))
                 }
                 val replyIntent = Intent()
                 setResult(Activity.RESULT_OK, replyIntent)

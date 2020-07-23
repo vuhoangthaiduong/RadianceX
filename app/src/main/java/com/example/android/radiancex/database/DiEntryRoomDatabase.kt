@@ -48,7 +48,9 @@ internal abstract class DiEntryRoomDatabase : RoomDatabase() {
                     var dictionaryEntryDao = database.dictionaryEntryDao()
 
 //                     Delete all content here.
-                    dictionaryEntryDao.deleteAll()
+//                    scope.launch {
+//                        dictionaryEntryDao.deleteAll()
+//                    }
 
                     // Add sample words.
                     val sampleStrings = arrayOfNulls<String>(4)
