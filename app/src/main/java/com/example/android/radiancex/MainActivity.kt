@@ -4,41 +4,36 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.getbase.floatingactionbutton.FloatingActionButton
-import com.getbase.floatingactionbutton.FloatingActionsMenu
+import com.example.android.radiancex.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var floatingActionsMenu: FloatingActionsMenu
-    private lateinit var tvScreenname: TextView
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        tvScreenname = findViewById(R.id.tvScreenName)
-        floatingActionsMenu = findViewById(R.id.add_content_menu)
-        val btnNewEntry = findViewById<FloatingActionButton>(R.id.action_add_entry)
-        val btnNewPost = findViewById<FloatingActionButton>(R.id.action_new_blog_post)
-        val btnNewQuestion = findViewById<FloatingActionButton>(R.id.action_new_question)
-        btnNewEntry.setOnClickListener { v: View? ->
-            val intent = Intent(this, AddNewEntryActivity::class.java)
-            startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setHomeButtonEnabled(true);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.let {
+            it.actionAddEntry.setOnClickListener { v: View? ->
+                val intent = Intent(this, AddNewEntryActivity::class.java)
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE)
+            }
+            it.actionNewQuestion.setOnClickListener { v: View? -> Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show() }
+            it.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+            loadFragment(DictionaryFragment())
+            it.tvScreenName.setText(R.string.dictionary)
         }
-        btnNewQuestion.setOnClickListener { v: View? -> Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show() }
-        btnNewPost.setOnClickListener { v: View? -> Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show() }
-        val bottomNavigationView = findViewById<View>(R.id.bottom_navigation) as BottomNavigationView
-        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        loadFragment(DictionaryFragment())
-        tvScreenname.setText(R.string.dictionary)
     }
 
     override fun onResume() {
         super.onResume()
-        if (floatingActionsMenu.isExpanded) floatingActionsMenu.collapse()
+        binding.let { if (it.addContentMenu.isExpanded) it.addContentMenu.collapse() }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -53,41 +48,17 @@ class MainActivity : AppCompatActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         val fragment: Fragment
         when (item.itemId) {
-            R.id.action_dictionary -> {
-                floatingActionsMenu.visibility = View.VISIBLE
-                if (floatingActionsMenu.isExpanded) floatingActionsMenu.collapse()
+            R.id.action_learn -> {
+                binding.let { if (it.addContentMenu.isExpanded) it.addContentMenu.collapse() }
                 fragment = DictionaryFragment()
-                tvScreenname.setText(R.string.dictionary)
+                binding.tvScreenName.setText(R.string.learn)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.action_ask -> {
-                floatingActionsMenu.visibility = View.VISIBLE
-                if (floatingActionsMenu.isExpanded) floatingActionsMenu.collapse()
-                fragment = AskFragment()
-                tvScreenname.setText(R.string.ask)
-                loadFragment(fragment)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.action_blog -> {
-                floatingActionsMenu.visibility = View.VISIBLE
-                if (floatingActionsMenu.isExpanded) floatingActionsMenu.collapse()
-                fragment = BlogFragment()
-                tvScreenname.setText(R.string.blog)
-                loadFragment(fragment)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.action_inbox -> {
-                floatingActionsMenu.visibility = View.GONE
-                fragment = InboxFragment()
-                tvScreenname.setText(R.string.inbox)
-                loadFragment(fragment)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.action_account -> {
-                floatingActionsMenu.visibility = View.GONE
-                fragment = AccountFragment()
-                tvScreenname.setText(R.string.account)
+            R.id.action_note -> {
+                binding.let { if (it.addContentMenu.isExpanded) it.addContentMenu.collapse() }
+                fragment = NoteFragment()
+                binding.tvScreenName.setText(R.string.note)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }

@@ -1,14 +1,10 @@
 package com.example.android.radiancex
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.radiancex.EntryRecyclerViewAdapter.EntryViewHolder
-import com.example.android.radiancex.database.DiEntry
+import com.example.android.radiancex.database.Sentence
 import com.example.android.radiancex.databinding.EntryCardBinding
 
 /**
@@ -16,13 +12,13 @@ import com.example.android.radiancex.databinding.EntryCardBinding
  */
 class EntryRecyclerViewAdapter  // Provide a suitable constructor (depends on the kind of dataset)
     : RecyclerView.Adapter<EntryViewHolder>() {
-    private var mEntries: List<DiEntry>? = null
+    private var mEntries: List<Sentence>? = null
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     class EntryViewHolder(private var binding: EntryCardBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(entry: DiEntry) {
+        fun bind(entry: Sentence) {
             binding.entry = entry
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
@@ -45,7 +41,7 @@ class EntryRecyclerViewAdapter  // Provide a suitable constructor (depends on th
 //        holder.btnEdit.setOnClickListener { v -> Toast.makeText(v.context, "Coming soon!", Toast.LENGTH_SHORT).show() }
     }
 
-    fun setEntries(entries: List<DiEntry>?) {
+    fun setEntries(entries: List<Sentence>?) {
         mEntries = entries
         notifyDataSetChanged()
     }

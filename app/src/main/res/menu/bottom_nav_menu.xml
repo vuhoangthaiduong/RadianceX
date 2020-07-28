@@ -2,35 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_dictionary"
+        android:id="@+id/action_learn"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_view_list_24"
-        android:title="Dictionary"
+        android:title="@string/learn"
         app:showAsAction="withText" />
     <item
-        android:id="@+id/action_ask"
+        android:id="@+id/action_note"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_question_answer_24"
-        android:title="Ask"
-        app:showAsAction="withText" />
-    <item
-        android:id="@+id/action_blog"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_amp_stories_24"
-        android:title="Blog"
-        app:showAsAction="withText" />
-
-    <item
-        android:id="@+id/action_inbox"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_inbox_24"
-        android:title="Inbox"
-        app:showAsAction="withText" />
-
-    <item
-        android:id="@+id/action_account"
-        android:enabled="true"
-        android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="Account"
+        android:icon="@drawable/ic_baseline_note_24"
+        android:title="@string/note"
         app:showAsAction="withText" />
 </menu>

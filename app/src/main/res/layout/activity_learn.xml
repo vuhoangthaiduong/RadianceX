@@ -1,12 +1,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"                        xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <data>
 
         <variable
             name="viewmodel"
-            type="com.example.android.radiancex.DiEntryViewModel"/>
+            type="com.example.android.radiancex.SentenceViewModel"/>
 
     </data>
 
@@ -43,44 +44,16 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tvNumberOfCardsLabel"
+                        android:id="@+id/tvCardId"
                         android:layout_width="wrap_content"
                         android:layout_height="21dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="8dp"
-                        android:text="@string/number_of_cards"
+                        android:text=" @{viewmodel.currentSentence.id}"
                         android:textAllCaps="true"
-                        android:textColor="#3F51B5"
+                        android:textColor="@color/colorPink"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/totalNumberOfCards"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:text=" " />
-
-                    <TextView
-                        android:id="@+id/tvIdLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="19dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/entry_id"
-                        android:textAllCaps="true"
-                        android:textColor="#3F51B5"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvId"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:text="@{viewmodel.currentSentence.id}" />
 
                 </LinearLayout>
 
@@ -113,16 +86,16 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="8dp"
                                 android:fontFamily="sans-serif-light"
-                                android:text="Japanese"
-                                android:textColor="#E91E63"
-                                android:textSize="18sp"
+                                android:text="@string/japanese"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="24sp"
                                 android:textStyle="bold"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <Switch
-                                android:id="@+id/switchShowJpn"
+                                android:id="@+id/swShowJpn"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
@@ -147,13 +120,13 @@
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/switchShowJpn" />
+                                app:layout_constraintTop_toBottomOf="@+id/swShowJpn" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/cvTranslation"
+                        android:id="@+id/cvVietnamese"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_margin="8dp">
@@ -163,20 +136,20 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:id="@+id/translationLabel"
+                                android:id="@+id/tvVietnameseLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="8dp"
-                                android:text="Translation"
-                                android:textColor="#E91E63"
-                                android:textSize="18sp"
+                                android:text="@string/vietnamese"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="24sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <Switch
-                                android:id="@+id/switchShowTranslation"
+                                android:id="@+id/swShowVietnamese"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
@@ -186,7 +159,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/translation"
+                                android:id="@+id/tvVietnamese"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginStart="8dp"
@@ -202,13 +175,14 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.0"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/switchShowTranslation"
+                                app:layout_constraintTop_toBottomOf="@+id/swShowVietnamese"
                                 app:layout_constraintVertical_bias="0.0" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.cardview.widget.CardView>
 
+
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/cvHint"
+                        android:id="@+id/cvEnglish"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_margin="8dp">
@@ -218,20 +192,20 @@
                             android:layout_height="match_parent">
 
                             <TextView
-                                android:id="@+id/hintLabel"
+                                android:id="@+id/tvEnglishLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="8dp"
-                                android:text="Hint"
-                                android:textColor="#E91E63"
-                                android:textSize="18sp"
+                                android:text="@string/english"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="24sp"
                                 android:textStyle="bold"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <Switch
-                                android:id="@+id/switchShowHint"
+                                android:id="@+id/swShowEnglish"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="8dp"
@@ -241,7 +215,7 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:id="@+id/hint"
+                                android:id="@+id/tvEnglish"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
                                 android:layout_marginStart="8dp"
@@ -257,7 +231,63 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_bias="0.0"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/switchShowHint"
+                                app:layout_constraintTop_toBottomOf="@+id/swShowEnglish"
+                                app:layout_constraintVertical_bias="1.0" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_margin="8dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/tvNoteLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/note"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="24sp"
+                                android:textStyle="bold"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <Switch
+                                android:id="@+id/swShowNote"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:checked="true"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvNote"
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:background="#FFFFFF"
+                                android:padding="8dp"
+                                android:textIsSelectable="true"
+                                android:textSize="18sp"
+                                android:text="@{viewmodel.currentSentence.note}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/swShowNote"
                                 app:layout_constraintVertical_bias="1.0" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>

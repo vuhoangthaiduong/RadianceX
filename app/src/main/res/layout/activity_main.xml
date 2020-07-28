@@ -1,105 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tvScreenName"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:text="screen_name"
-        android:textAlignment="center"
-        android:elevation="4dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="26sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <FrameLayout
-            android:id="@+id/container_test"
+        <TextView
+            android:id="@+id/tvScreenName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></FrameLayout>
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:elevation="4dp"
+            android:gravity="center"
+            android:text="screen_name"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/add_content_menu"
-            android:layout_width="421dp"
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/container_test"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></FrameLayout>
+
+            <com.getbase.floatingactionbutton.FloatingActionsMenu
+                android:id="@+id/add_content_menu"
+                android:layout_width="421dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="72dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                fab:fab_addButtonColorNormal="@color/colorPink"
+                fab:fab_addButtonColorPressed="@color/pink_pressed"
+                fab:fab_icon="@drawable/ic_baseline_add_24"
+                fab:fab_labelStyle="@style/menu_labels_style"
+                fab:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/action_add_entry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/new_sentence"
+                    fab:fab_colorNormal="@color/colorPink"
+                    fab:fab_colorPressed="@color/pink_pressed"
+                    fab:fab_icon="@drawable/ic_baseline_view_list_24_white"
+                    fab:fab_size="mini"
+                    fab:fab_title="@string/new_sentence" />
+
+                <com.getbase.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/action_new_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/new_note"
+                    fab:fab_colorNormal="@color/colorPink"
+                    fab:fab_colorPressed="@color/pink_pressed"
+                    fab:fab_icon="@drawable/ic_baseline_note_24_white"
+                    fab:fab_size="mini"
+                    fab:fab_title="@string/new_note" />
+            </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="72dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/white"
+            app:elevation="8dp"
+            app:itemIconTint="@drawable/bottom_navigation_selector"
+            app:itemTextColor="@drawable/bottom_navigation_selector"
+            app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            fab:fab_addButtonColorNormal="@color/pink"
-            fab:fab_addButtonColorPressed="@color/pink_pressed"
-            fab:fab_icon="@drawable/ic_baseline_add_24"
-            fab:fab_labelStyle="@style/menu_labels_style"
-            fab:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav_menu">
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_add_entry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/new_entry"
-                fab:fab_colorNormal="@color/pink"
-                fab:fab_colorPressed="@color/pink_pressed"
-                fab:fab_icon="@drawable/ic_baseline_view_list_24_white"
-                fab:fab_size="mini"
-                fab:fab_title="@string/new_entry" />
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_new_question"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/ask_a_question"
-                fab:fab_colorNormal="@color/pink"
-                fab:fab_colorPressed="@color/pink_pressed"
-                fab:fab_icon="@drawable/ic_baseline_question_answer_24_white"
-                fab:fab_size="mini"
-                fab:fab_title="@string/ask_a_question" />
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/action_new_blog_post"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/new_blog_post"
-                fab:fab_colorNormal="@color/pink"
-                fab:fab_colorPressed="@color/pink_pressed"
-                fab:fab_icon="@drawable/ic_baseline_amp_stories_24_white"
-                fab:fab_size="mini"
-                fab:fab_title="@string/new_blog_post" />
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@android:color/white"
-        app:elevation="8dp"
-        app:itemIconTint="@drawable/bottom_navigation_selector"
-        app:itemTextColor="@drawable/bottom_navigation_selector"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu">
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

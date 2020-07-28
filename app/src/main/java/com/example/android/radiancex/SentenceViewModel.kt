@@ -3,34 +3,34 @@ package com.example.android.radiancex
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.android.radiancex.database.DiEntry
-import com.example.android.radiancex.database.DiEntryRoomDatabase
+import com.example.android.radiancex.database.Sentence
+import com.example.android.radiancex.database.SentenceRoomDatabase
 import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class DiEntryViewModel(application: Application) : AndroidViewModel(application) {
-    private var repository: DiEntryRepository
+class SentenceViewModel(application: Application) : AndroidViewModel(application) {
+    private var repository: SentenceRepository
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    private var _currentDeck = MutableLiveData<ArrayList<DiEntry>>()
-    private var _currentSentence = MutableLiveData<DiEntry>()
-    var currentDeck: LiveData<ArrayList<DiEntry>>
+    private var _currentDeck = MutableLiveData<ArrayList<Sentence>>()
+    private var _currentSentence = MutableLiveData<Sentence>()
+    var currentDeck: LiveData<ArrayList<Sentence>>
         get() = _currentDeck
-    var currentSentence: LiveData<DiEntry>
+    var currentSentence: LiveData<Sentence>
         get() = _currentSentence
 
     private lateinit var cardViewHistoryStack: Stack<Int>
 
-    lateinit var allEntries: LiveData<List<DiEntry>>
+    lateinit var allEntries: LiveData<List<Sentence>>
 //    var numberOfEntries = Transformations.map(allEntries) { entries ->
 //        entries.size
 //    }
 
     init {
-        initialize()
-        val dientriesDao = DiEntryRoomDatabase.getDatabase(application, viewModelScope).dictionaryEntryDao()
-        repository = DiEntryRepository(dientriesDao)
+//        initialize()
+        val dientriesDao = SentenceRoomDatabase.getDatabase(application, viewModelScope, application.resources).sentenceDao()
+        repository = SentenceRepository(dientriesDao)
         allEntries = repository.allDiEntries
         currentDeck = _currentDeck
         currentSentence = _currentSentence
@@ -40,7 +40,7 @@ class DiEntryViewModel(application: Application) : AndroidViewModel(application)
         uiScope.launch {
 //            _currentDeck.value = getNewDeckFromDatabase()
 //            _currentSentence.value = getNewCurrentSentence()
-            val deferredResult: Deferred<ArrayList<DiEntry>> = uiScope.async {
+            val deferredResult: Deferred<ArrayList<Sentence>> = uiScope.async {
                 getNewDeckFromDatabase()
             }
             _currentDeck.value = deferredResult.await()
@@ -49,14 +49,7 @@ class DiEntryViewModel(application: Application) : AndroidViewModel(application)
     }
 
 
-    fun findDiEntryByIdSynchronous(id: Int): DiEntry {
-        return repository.findDiEntryByIdSynchronous(id)
-    }
-
-    val numberOfEntriesSynchronous: Int
-        get() = repository.numberOfEntriesSynchronous
-
-    fun insert(sentence: DiEntry) = viewModelScope.launch(Dispatchers.IO) {
+    fun insert(sentence: Sentence) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(sentence)
     }
 
@@ -64,10 +57,10 @@ class DiEntryViewModel(application: Application) : AndroidViewModel(application)
         repository.deleteAllEntries()
     }
 
-    private suspend fun getNewDeckFromDatabase(): ArrayList<DiEntry> {
+    private suspend fun getNewDeckFromDatabase(): ArrayList<Sentence> {
         return withContext(Dispatchers.IO) {
             val deckSize: Int = 20
-            val tempDeck: ArrayList<DiEntry> = ArrayList<DiEntry>(deckSize)
+            val tempDeck: ArrayList<Sentence> = ArrayList<Sentence>(deckSize)
 //            val sampleStrings = arrayOfNulls<String>(4)
 //            var jpn: String?
 //            var eng: String?
@@ -82,18 +75,18 @@ class DiEntryViewModel(application: Application) : AndroidViewModel(application)
 //                eng = sampleStrings[(Math.random() * 4).toInt()]
 //                mea = sampleStrings[(Math.random() * 4).toInt()]
 //                vie = sampleStrings[(Math.random() * 4).toInt()]
-////                tempDeck.add(DiEntry(jpn, mea, eng, vie))
+////                tempDeck.add(Sentence(jpn, mea, eng, vie))
 //            }
             for (i in 0 until deckSize) {
-                tempDeck.add(findDiEntryByIdSynchronous((0..numberOfEntriesSynchronous).random()))
+                //TODO
             }
             Log.d("tempDeckLiveData size: ", tempDeck.size.toString())
             return@withContext tempDeck
         }
     }
 
-    private fun getNewCurrentSentence(): DiEntry? {
-        return _currentDeck.value?.get((0.._currentDeck.value!!.size).random())
+    private fun getNewCurrentSentence(): Sentence? {
+        return _currentDeck.value?.get((0 until _currentDeck.value!!.size).random())
     }
 
     suspend fun onGetNewDeck() {

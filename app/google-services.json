@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "809914199112",
+    "firebase_url": "https://radiancex-e5ef9.firebaseio.com",
+    "project_id": "radiancex-e5ef9",
+    "storage_bucket": "radiancex-e5ef9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809914199112:android:f254819e34b6b716a63c7d",
+        "android_client_info": {
+          "package_name": "com.example.android.radiancex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809914199112-1uqvogfmm5nb1dvui4v4999vme32t6a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxONKrPvtpRprJCimijk8hpIomBPTy9EU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809914199112-1uqvogfmm5nb1dvui4v4999vme32t6a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

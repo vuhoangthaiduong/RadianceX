@@ -5,8 +5,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "dientries")
-data class DiEntry(
+@Entity(tableName = "sentences")
+data class Sentence(
         @PrimaryKey(autoGenerate = true)
         @NonNull
         @ColumnInfo(name = "id")
@@ -14,9 +14,6 @@ data class DiEntry(
 
         @ColumnInfo(name = "jpn")
         var jpn: String? = null,
-
-        @ColumnInfo(name = "meaning")
-        var meaning: String? = null,
 
         @ColumnInfo(name = "eng")
         var eng: String? = null,

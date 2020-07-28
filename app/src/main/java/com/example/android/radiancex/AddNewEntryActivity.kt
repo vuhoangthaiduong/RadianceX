@@ -11,14 +11,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.radiancex.database.DiEntry
 
 class AddNewEntryActivity : AppCompatActivity() {
     private lateinit var etJapanese: EditText
     private lateinit var etMeaning: EditText
     private lateinit var etVietnamese: EditText
     private lateinit var etEnglish: EditText
-    private lateinit var diEntryViewModel: DiEntryViewModel
+    private lateinit var diEntryViewModel: SentenceViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_entry)
@@ -31,7 +30,7 @@ class AddNewEntryActivity : AppCompatActivity() {
         etMeaning = findViewById(R.id.etMeaning)
         etEnglish = findViewById(R.id.etEnglish)
         etVietnamese = findViewById(R.id.etVietnamese)
-        diEntryViewModel = ViewModelProvider(this).get(DiEntryViewModel::class.java)
+        diEntryViewModel = ViewModelProvider(this).get(SentenceViewModel::class.java)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -54,7 +53,7 @@ class AddNewEntryActivity : AppCompatActivity() {
                 val meaning = etMeaning.text.toString().trim { it <= ' ' }
                 val vie = etVietnamese.text.toString().trim { it <= ' ' }
                 Thread {
-//                    diEntryViewModel.insert(DiEntry((diEntryViewModel.numberOfEntriesSynchronous + 1).toString(), jpn, meaning, eng, vie, ""))
+//                    diEntryViewModel.insert(Sentence((diEntryViewModel.numberOfEntriesSynchronous + 1).toString(), jpn, meaning, eng, vie, ""))
                 }
                 val replyIntent = Intent()
                 setResult(Activity.RESULT_OK, replyIntent)

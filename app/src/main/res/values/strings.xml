@@ -21,6 +21,8 @@
     <string name="change_display_order">Change display order</string>
     <string name="email">Email</string>
     <string name="new_entry">New Entry</string>
+    <string name="new_sentence">New Sentence</string>
+    <string name="new_note">New Note</string>
     <string name="ask_a_question">Ask a question</string>
     <string name="new_blog_post">New blog post</string>
     <string name="coming_soon">Coming soon!</string>
@@ -32,5 +34,23 @@
     <string name="number_of_cards">Number of cards</string>
     <string name="previous">Previous</string>
     <string name="edit">Edit</string>
+    <string name="learn">Learn</string>
+    <string name="note">Note</string>
+    <string name="japanese">Japanese</string>
+    <string name="translation">Translation</string>
+    <string name="hint">Hint</string>
+    <string name="english">English</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 </resources>
