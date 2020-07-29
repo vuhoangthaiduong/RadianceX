@@ -56,5 +56,11 @@
     <string name="i_forgot_my_password">I forgot my password</string>
     <string name="logout">Logout</string>
     <string name="settings">Settings</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign in</string>
+    <string name="create_a_new_account">Create a new account</string>
+    <string name="password">Password</string>
+    <string name="or_go_back_to_log_in">…or go back to log in</string>
 
 </resources>

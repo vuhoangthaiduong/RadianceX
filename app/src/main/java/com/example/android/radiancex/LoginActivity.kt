@@ -25,8 +25,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnSignIn.setOnClickListener {
-            val email = binding.etEmail.text.toString().trim()
-            val password = binding.etPassword.text.toString().trim()
+            val email = binding.etEmail.editText?.text.toString().trim()
+            val password = binding.etPassword.editText?.text.toString().trim()
 
             if (TextUtils.isEmpty(email)) {
                 binding.etEmail.error = "Email is required"
@@ -38,15 +38,15 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            binding.progressBar.visibility = View.VISIBLE
+            binding.included.visibility = View.VISIBLE
 
             fAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(this, "Registered successfully", Toast.LENGTH_SHORT).show()
+                    binding.included.visibility = View.GONE
+                    Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(applicationContext, MainActivity::class.java))
                 } else {
-                    binding.progressBar.visibility = View.GONE
+                    binding.included.visibility = View.GONE
                     Toast.makeText(this, "An unexpected error occurred ${it.exception.toString()}", Toast.LENGTH_SHORT).show()
                 }
             }
