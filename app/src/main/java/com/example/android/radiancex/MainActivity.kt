@@ -50,14 +50,14 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_learn -> {
                 binding.let { if (it.addContentMenu.isExpanded) it.addContentMenu.collapse() }
-                fragment = DictionaryFragment()
+                fragment = DictionaryFragment.newInstance()
                 binding.tvScreenName.setText(R.string.learn)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.action_note -> {
                 binding.let { if (it.addContentMenu.isExpanded) it.addContentMenu.collapse() }
-                fragment = NoteFragment()
+                fragment = NoteFragment.newInstance()
                 binding.tvScreenName.setText(R.string.note)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true

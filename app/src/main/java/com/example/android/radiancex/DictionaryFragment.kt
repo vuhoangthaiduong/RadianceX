@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.radiancex.databinding.FragmentDictionaryBinding
+import com.example.android.radiancex.model.SentenceViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class DictionaryFragment : Fragment() {
@@ -45,10 +46,10 @@ class DictionaryFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_NEW_ENTRY_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
-                Snackbar.make(this.view!!, data!!.getCharSequenceExtra("jpn")!!, Snackbar.LENGTH_LONG)
+                Snackbar.make(this.requireView(), data!!.getCharSequenceExtra("jpn")!!, Snackbar.LENGTH_LONG)
                         .setAction("Close", null).show()
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Snackbar.make(this.view!!, "No data received", Snackbar.LENGTH_LONG).setAction("Close", null).show()
+                Snackbar.make(this.requireView(), "No data received", Snackbar.LENGTH_LONG).setAction("Close", null).show()
             }
         }
     }

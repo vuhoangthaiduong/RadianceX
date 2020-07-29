@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.example.android.radiancex.SentenceViewModel" />
+            type="com.example.android.radiancex.model.SentenceViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

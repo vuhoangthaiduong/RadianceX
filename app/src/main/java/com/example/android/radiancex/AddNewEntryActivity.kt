@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
+import com.example.android.radiancex.model.SentenceViewModel
 
 class AddNewEntryActivity : AppCompatActivity() {
     private lateinit var etJapanese: EditText

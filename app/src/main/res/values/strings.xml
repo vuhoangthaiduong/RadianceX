@@ -53,5 +53,8 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="radiancex">RadianceX</string>
+    <string name="i_forgot_my_password">I forgot my password</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Settings</string>
 
 </resources>

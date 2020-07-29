@@ -1,4 +1,4 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.model
 
 import androidx.lifecycle.ViewModel
 
