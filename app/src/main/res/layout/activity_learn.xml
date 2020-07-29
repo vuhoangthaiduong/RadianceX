@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.example.android.radiancex.SentenceViewModel"/>
+            type="com.example.android.radiancex.model.SentenceViewModel"/>
 
     </data>
 

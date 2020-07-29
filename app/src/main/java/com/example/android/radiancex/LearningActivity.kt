@@ -11,11 +11,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.radiancex.database.Sentence
 import com.example.android.radiancex.databinding.ActivityLearnBinding
+import com.example.android.radiancex.model.SentenceViewModel
 import java.io.IOException
 import java.util.*
 
 class LearningActivity() : AppCompatActivity() {
-    lateinit var mDiEntryViewModel: SentenceViewModel
+    lateinit var mSentenceViewModel: SentenceViewModel
     lateinit var progressDialog: ProgressDialog
     lateinit var handler: Handler
     private var currentDeck: ArrayList<Sentence>? = null
@@ -26,9 +27,9 @@ class LearningActivity() : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mDiEntryViewModel = ViewModelProvider(this).get(SentenceViewModel::class.java)
+        mSentenceViewModel = ViewModelProvider(this).get(SentenceViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_learn)
-        binding.viewmodel = mDiEntryViewModel
+        binding.viewmodel = mSentenceViewModel
 
         val mToolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(mToolbar)
@@ -55,7 +56,7 @@ class LearningActivity() : AppCompatActivity() {
                 Toast.makeText(applicationContext, "New deck generated", Toast.LENGTH_SHORT).show()
             })
 
-            btnNext.setOnClickListener { v: View? -> mDiEntryViewModel.onGoToNext() }
+            btnNext.setOnClickListener { v: View? -> mSentenceViewModel.onGoToNext() }
 
             swShowJpn.setOnClickListener { v: View? ->
                 if (currentSentence != null) {
