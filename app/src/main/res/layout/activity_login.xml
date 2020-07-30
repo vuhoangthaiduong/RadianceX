@@ -114,7 +114,8 @@
 
         <include
             android:id="@+id/included"
-            layout="@layout/progress_overlay"/>
+            layout="@layout/progress_overlay" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

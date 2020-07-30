@@ -10,13 +10,11 @@
     android:focusable="true"
     android:visibility="gone">
 
-    <com.pnikosis.materialishprogress.ProgressWheel
-        android:id="@+id/progress_wheel"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:clickable="true"
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        wheel:matProg_barColor="#5588FF"
-        wheel:matProg_progressIndeterminate="true" />
+        android:indeterminate="true"/>
 
 </FrameLayout>

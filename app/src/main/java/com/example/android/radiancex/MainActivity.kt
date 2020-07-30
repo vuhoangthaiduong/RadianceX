@@ -12,8 +12,11 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.android.radiancex.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
@@ -47,18 +50,39 @@ class MainActivity : AppCompatActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         val fragment: Fragment
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
         when (item.itemId) {
             R.id.action_learn -> {
-                binding.let { if (it.addContentMenu.isExpanded) it.addContentMenu.collapse() }
+                if (currentFragment is DictionaryFragment) return@OnNavigationItemSelectedListener false
+                binding.apply {
+                    addContentMenu.visibility = View.VISIBLE
+                    if (addContentMenu.isExpanded) addContentMenu.collapse()
+                    binding.tvScreenName.visibility = View.VISIBLE
+                    tvScreenName.setText(R.string.learn)
+                }
                 fragment = DictionaryFragment.newInstance()
-                binding.tvScreenName.setText(R.string.learn)
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.action_note -> {
-                binding.let { if (it.addContentMenu.isExpanded) it.addContentMenu.collapse() }
+                if (currentFragment is NoteFragment) return@OnNavigationItemSelectedListener false
+                binding.apply {
+                    addContentMenu.visibility = View.VISIBLE
+                    if (addContentMenu.isExpanded) addContentMenu.collapse()
+                    binding.tvScreenName.visibility = View.VISIBLE
+                    tvScreenName.setText(R.string.note)
+                }
                 fragment = NoteFragment.newInstance()
-                binding.tvScreenName.setText(R.string.note)
+                loadFragment(fragment)
+                return@OnNavigationItemSelectedListener true
+            }
+
+            R.id.action_account -> {
+                if (currentFragment is AccountFragment) return@OnNavigationItemSelectedListener false
+                binding.addContentMenu.visibility = View.GONE
+//                binding.tvScreenName.setText(R.string.account)
+                binding.tvScreenName.visibility = View.GONE
+                fragment = AccountFragment.newInstance()
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -70,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         // load fragment
         val transaction = supportFragmentManager.beginTransaction()
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        transaction.replace(R.id.container_test, fragment)
+        transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }

@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.android.radiancex.databinding.ActivityLoginBinding
-import com.example.android.radiancex.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
@@ -19,6 +18,13 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         fAuth = FirebaseAuth.getInstance()
+
+        if (fAuth.currentUser != null) {
+            intent = Intent(applicationContext, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
 
         binding.btnSignUp.setOnClickListener {
             startActivity(Intent(applicationContext, RegisterActivity::class.java))
@@ -44,7 +50,9 @@ class LoginActivity : AppCompatActivity() {
                 if (it.isSuccessful) {
                     binding.included.visibility = View.GONE
                     Toast.makeText(this, "Logged in successfully", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(applicationContext, MainActivity::class.java))
+                    intent = Intent(applicationContext, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                 } else {
                     binding.included.visibility = View.GONE
                     Toast.makeText(this, "An unexpected error occurred ${it.exception.toString()}", Toast.LENGTH_SHORT).show()
