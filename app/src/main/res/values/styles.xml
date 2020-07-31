@@ -10,8 +10,11 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_baseline_arrow_back_ios_24</item>
-        <item name="android:statusBarColor" tools:ignore="NewApi">@color/white</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds" tools:ignore="NewApi">true</item>
+        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
     </style>
 
     <style name="AppThemeOverLay" parent="ThemeOverlay.AppCompat.Light">

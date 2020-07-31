@@ -2,11 +2,11 @@ package com.example.android.radiancex
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.radiancex.databinding.FragmentDictionaryBinding
@@ -27,12 +27,17 @@ class DictionaryFragment : Fragment() {
         binding = FragmentDictionaryBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window? = this.activity?.window
+            window?.statusBarColor = ContextCompat.getColor(this.requireContext(), R.color.white);
+        }
+
         binding.apply {
 
             cvWordOfTheDay.setOnClickListener { v: View -> Toast.makeText(v.context, "Coming soon!", Toast.LENGTH_SHORT).show() }
 
             btnDailyTraining.setOnClickListener {
-                val intent = Intent(activity, LearningActivity::class.java)
+                val intent = Intent(activity, LearnActivity::class.java)
                 startActivity(intent)
             }
             btnBrowse.setOnClickListener {

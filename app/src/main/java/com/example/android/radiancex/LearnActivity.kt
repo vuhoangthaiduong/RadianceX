@@ -15,7 +15,7 @@ import com.example.android.radiancex.model.SentenceViewModel
 import java.io.IOException
 import java.util.*
 
-class LearningActivity() : AppCompatActivity() {
+class LearnActivity() : AppCompatActivity() {
     lateinit var mSentenceViewModel: SentenceViewModel
     lateinit var progressDialog: ProgressDialog
     lateinit var handler: Handler

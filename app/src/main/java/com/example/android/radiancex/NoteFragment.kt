@@ -1,11 +1,11 @@
 package com.example.android.radiancex
 
+import android.os.Build
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.android.radiancex.model.NoteViewModel
 
 class NoteFragment : Fragment() {
@@ -18,7 +18,13 @@ class NoteFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.note_fragment, container, false)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window? = this.activity?.window
+            window?.statusBarColor = ContextCompat.getColor(this.requireContext(), R.color.white);
+        }
+
+        return inflater.inflate(R.layout.fragment_note, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

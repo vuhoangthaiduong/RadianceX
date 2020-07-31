@@ -28,7 +28,7 @@
             android:name=".screen.browse.BrowseActivity"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".LearningActivity"
+            android:name=".LearnActivity"
             android:parentActivityName=".MainActivity" />
     </application>
 

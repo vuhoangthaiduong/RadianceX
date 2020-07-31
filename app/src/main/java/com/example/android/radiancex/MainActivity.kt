@@ -2,10 +2,16 @@ package com.example.android.radiancex
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -17,11 +23,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val dictionaryFragment = DictionaryFragment.newInstance()
+    private val noteFragment = NoteFragment.newInstance()
+    private val accountFragment = AccountFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setHomeButtonEnabled(true);
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            setTransparentStatusBar()
+//        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.let {
             it.actionAddEntry.setOnClickListener { v: View? ->
@@ -31,7 +45,6 @@ class MainActivity : AppCompatActivity() {
             it.actionNewQuestion.setOnClickListener { v: View? -> Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show() }
             it.bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
             loadFragment(DictionaryFragment())
-            it.tvScreenName.setText(R.string.dictionary)
         }
     }
 
@@ -58,10 +71,8 @@ class MainActivity : AppCompatActivity() {
                 binding.apply {
                     addContentMenu.visibility = View.VISIBLE
                     if (addContentMenu.isExpanded) addContentMenu.collapse()
-                    binding.tvScreenName.visibility = View.VISIBLE
-                    tvScreenName.setText(R.string.learn)
                 }
-                fragment = DictionaryFragment.newInstance()
+                fragment = dictionaryFragment
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -70,10 +81,8 @@ class MainActivity : AppCompatActivity() {
                 binding.apply {
                     addContentMenu.visibility = View.VISIBLE
                     if (addContentMenu.isExpanded) addContentMenu.collapse()
-                    binding.tvScreenName.visibility = View.VISIBLE
-                    tvScreenName.setText(R.string.note)
                 }
-                fragment = NoteFragment.newInstance()
+                fragment = noteFragment
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -81,9 +90,7 @@ class MainActivity : AppCompatActivity() {
             R.id.action_account -> {
                 if (currentFragment is AccountFragment) return@OnNavigationItemSelectedListener false
                 binding.addContentMenu.visibility = View.GONE
-//                binding.tvScreenName.setText(R.string.account)
-                binding.tvScreenName.visibility = View.GONE
-                fragment = AccountFragment.newInstance()
+                fragment = accountFragment
                 loadFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
@@ -98,6 +105,15 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun Activity.setTransparentStatusBar() {
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = Color.TRANSPARENT
+            window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);//  set status text dark
+        }
     }
 
     companion object {
