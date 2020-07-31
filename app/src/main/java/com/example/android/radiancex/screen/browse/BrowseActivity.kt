@@ -1,4 +1,4 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.screen.browse
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import com.example.android.radiancex.R
 import com.example.android.radiancex.databinding.ActivityBrowseBinding
 
 class BrowseActivity : AppCompatActivity() {

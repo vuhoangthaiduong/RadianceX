@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.android.radiancex.databinding.ActivityMainBinding
+import com.example.android.radiancex.screen.account.AccountFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

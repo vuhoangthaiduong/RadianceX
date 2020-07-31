@@ -80,7 +80,7 @@
             android:inputType="textPersonName|textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/containter">
+            app:layout_constraintTop_toBottomOf="@id/containter">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
