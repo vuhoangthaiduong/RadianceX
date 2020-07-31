@@ -1,4 +1,4 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.screen.account
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.android.radiancex.LoginActivity
 import com.example.android.radiancex.databinding.FragmentAccountBinding
+import com.example.android.radiancex.screen.browse.EntryRecyclerViewAdapter
 import com.google.firebase.auth.FirebaseAuth
 import java.lang.Exception
 
@@ -23,6 +25,14 @@ class AccountFragment : Fragment() {
         val view = binding.root
 
         fAuth = FirebaseAuth.getInstance()
+
+        val mAdapter = AccountMenuRecyclerViewAdapter()
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        binding.apply {
+            accountMenuRecycler.setHasFixedSize(true)
+            accountMenuRecycler.adapter = mAdapter
+        }
 
         binding.apply {
             btnSettings.setOnClickListener {

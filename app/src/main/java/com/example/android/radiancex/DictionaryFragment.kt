@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.radiancex.databinding.FragmentDictionaryBinding
 import com.example.android.radiancex.model.SentenceViewModel
+import com.example.android.radiancex.screen.browse.BrowseActivity
 import com.google.android.material.snackbar.Snackbar
 
 class DictionaryFragment : Fragment() {

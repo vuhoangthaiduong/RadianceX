@@ -1,9 +1,9 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.screen.browse
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.radiancex.EntryRecyclerViewAdapter.EntryViewHolder
+import com.example.android.radiancex.screen.browse.EntryRecyclerViewAdapter.EntryViewHolder
 import com.example.android.radiancex.database.Sentence
 import com.example.android.radiancex.databinding.EntryCardBinding
 
