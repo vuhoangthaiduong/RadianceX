@@ -1,4 +1,4 @@
-package com.example.android.radiancex.database
+package com.example.android.radiancex.model
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
@@ -13,17 +13,17 @@ data class Sentence(
         var id: Int = 0,
 
         @ColumnInfo(name = "jpn")
-        var jpn: String? = null,
+        var japanese: String? = null,
 
         @ColumnInfo(name = "eng")
-        var eng: String? = null,
+        var english: String? = null,
 
         @ColumnInfo(name = "vie")
-        var vie: String? = null,
+        var vietnamese: String? = null,
 
         @ColumnInfo(name = "note")
         var note: String? = null
 ) {
     @ColumnInfo(name = "favourite")
-    var isFavourite: Boolean = false
+    var isImportant: Boolean = false
 }

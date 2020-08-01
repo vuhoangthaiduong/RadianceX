@@ -1,4 +1,4 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.screen
 
 import android.os.Build
 import androidx.lifecycle.ViewModelProviders
@@ -6,7 +6,8 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.android.radiancex.model.NoteViewModel
+import com.example.android.radiancex.R
+import com.example.android.radiancex.viewmodel.NoteViewModel
 
 class NoteFragment : Fragment() {
 

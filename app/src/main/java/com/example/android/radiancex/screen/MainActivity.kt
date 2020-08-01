@@ -1,4 +1,4 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.screen
 
 import android.app.Activity
 import android.content.Intent
@@ -6,15 +6,12 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import com.example.android.radiancex.R
 import com.example.android.radiancex.databinding.ActivityMainBinding
 import com.example.android.radiancex.screen.account.AccountFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -101,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadFragment(fragment: Fragment) {
         // load fragment
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction.replace(R.id.fragment_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()

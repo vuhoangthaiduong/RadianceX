@@ -16,5 +16,5 @@
         android:textAlignment="gravity"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/colorPrimaryDark" />
+        app:titleTextColor="@color/colorPrimaryText" />
 </com.google.android.material.appbar.AppBarLayout>

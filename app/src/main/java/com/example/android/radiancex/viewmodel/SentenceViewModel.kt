@@ -1,9 +1,9 @@
-package com.example.android.radiancex.model
+package com.example.android.radiancex.viewmodel
 
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.android.radiancex.database.Sentence
+import com.example.android.radiancex.model.Sentence
 import com.example.android.radiancex.database.SentenceRoomDatabase
 import com.example.android.radiancex.repository.SentenceRepository
 import kotlinx.coroutines.*

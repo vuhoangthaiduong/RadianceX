@@ -1,4 +1,4 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.screen
 
 import android.app.Activity
 import android.content.Intent
@@ -9,22 +9,23 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.radiancex.databinding.FragmentDictionaryBinding
-import com.example.android.radiancex.model.SentenceViewModel
+import com.example.android.radiancex.R
+import com.example.android.radiancex.databinding.FragmentLearnBinding
+import com.example.android.radiancex.viewmodel.SentenceViewModel
 import com.example.android.radiancex.screen.browse.BrowseActivity
 import com.google.android.material.snackbar.Snackbar
 
 class DictionaryFragment : Fragment() {
     val ADD_NEW_ENTRY_ACTIVITY = 1
     private var diEntryViewModel: SentenceViewModel? = null
-    private lateinit var binding: FragmentDictionaryBinding
+    private lateinit var binding: FragmentLearnBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         diEntryViewModel = ViewModelProvider(this).get(SentenceViewModel::class.java)
 
-        binding = FragmentDictionaryBinding.inflate(inflater, container, false)
+        binding = FragmentLearnBinding.inflate(inflater, container, false)
         val view = binding.root
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -36,11 +37,11 @@ class DictionaryFragment : Fragment() {
 
             cvWordOfTheDay.setOnClickListener { v: View -> Toast.makeText(v.context, "Coming soon!", Toast.LENGTH_SHORT).show() }
 
-            btnDailyTraining.setOnClickListener {
+            cardview1.setOnClickListener {
                 val intent = Intent(activity, LearnActivity::class.java)
                 startActivity(intent)
             }
-            btnBrowse.setOnClickListener {
+            cardview2.setOnClickListener {
                 val intent = Intent(activity, BrowseActivity::class.java)
                 startActivity(intent)
             }

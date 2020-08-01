@@ -10,7 +10,6 @@
     <string name="action_delete">Delete</string>
     <string name="action_share">Share</string>
     <string name="save_entry">Save</string>
-    <string name="daily_training">Daily Training</string>
     <string name="browse">Browse</string>
     <string name="go_to_account_settings">GO TO ACCOUNT SETTINGS</string>
     <string name="vu_hoang_thai_duong">Vu Hoang Thai Duong</string>
@@ -35,7 +34,6 @@
     <string name="previous">Previous</string>
     <string name="edit">Edit</string>
     <string name="learn">Learn</string>
-    <string name="note">Note</string>
     <string name="japanese">Japanese</string>
     <string name="translation">Translation</string>
     <string name="hint">Hint</string>
@@ -63,6 +61,11 @@
     <string name="password">Password</string>
     <string name="or_go_back_to_log_in">…or go back to log in</string>
     <string name="long_text">Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero\'s De Finibus Bonorum et Malorum for use in a type specimen book.</string>
+    <string name="no_item_message">There\'s nothing here yet :(\nConsider adding some new items?</string>
+    <string name="daily_training">Daily Training</string>
+    <string name="hone_your_skills_everyday">Hone your skills everyday</string>
+    <string name="see_everything">See everything</string>
+    <string name="note">Note</string>
 
 
 </resources>

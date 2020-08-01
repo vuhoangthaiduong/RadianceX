@@ -2,7 +2,7 @@ package com.example.android.radiancex.repository
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
-import com.example.android.radiancex.database.Sentence
+import com.example.android.radiancex.model.Sentence
 import com.example.android.radiancex.database.SentenceDao
 
 class SentenceRepository(private val mSentenceDao: SentenceDao) {

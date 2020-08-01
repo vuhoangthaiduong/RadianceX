@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.radiancex.screen.browse.EntryRecyclerViewAdapter.EntryViewHolder
-import com.example.android.radiancex.database.Sentence
-import com.example.android.radiancex.databinding.EntryCardBinding
+import com.example.android.radiancex.model.Sentence
+import com.example.android.radiancex.databinding.CardBrowserItemBinding
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].
@@ -17,7 +17,7 @@ class EntryRecyclerViewAdapter  // Provide a suitable constructor (depends on th
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    class EntryViewHolder(private var binding: EntryCardBinding) : RecyclerView.ViewHolder(binding.root) {
+    class EntryViewHolder(private var binding: CardBrowserItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(entry: Sentence) {
             binding.entry = entry
             // This is important, because it forces the data binding to execute immediately,
@@ -29,7 +29,7 @@ class EntryRecyclerViewAdapter  // Provide a suitable constructor (depends on th
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EntryViewHolder {
         // create a new view
-        return EntryViewHolder(EntryCardBinding.inflate(LayoutInflater.from(parent.context)))
+        return EntryViewHolder(CardBrowserItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     // Replace the contents of a view (invoked by the layout manager)

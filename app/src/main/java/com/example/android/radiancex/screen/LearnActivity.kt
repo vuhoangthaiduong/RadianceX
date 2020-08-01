@@ -1,4 +1,4 @@
-package com.example.android.radiancex
+package com.example.android.radiancex.screen
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -9,9 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.radiancex.database.Sentence
+import com.example.android.radiancex.R
+import com.example.android.radiancex.model.Sentence
 import com.example.android.radiancex.databinding.ActivityLearnBinding
-import com.example.android.radiancex.model.SentenceViewModel
+import com.example.android.radiancex.viewmodel.SentenceViewModel
 import java.io.IOException
 import java.util.*
 
@@ -60,17 +61,17 @@ class LearnActivity() : AppCompatActivity() {
 
             swShowJpn.setOnClickListener { v: View? ->
                 if (currentSentence != null) {
-                    tvJaSentence.text = if ((swShowJpn.isChecked)) currentSentence!!.jpn else ""
+                    tvJaSentence.text = if ((swShowJpn.isChecked)) currentSentence!!.japanese else ""
                 }
             }
             swShowVietnamese.setOnClickListener { v: View? ->
                 if (currentSentence != null) {
-                    tvVietnamese.text = if ((swShowVietnamese.isChecked)) currentSentence!!.vie else ""
+                    tvVietnamese.text = if ((swShowVietnamese.isChecked)) currentSentence!!.vietnamese else ""
                 }
             }
             swShowEnglish.setOnClickListener { v: View? ->
                 if (currentSentence != null) {
-                    tvEnglish.text = if ((swShowEnglish.isChecked)) currentSentence!!.vie else ""
+                    tvEnglish.text = if ((swShowEnglish.isChecked)) currentSentence!!.vietnamese else ""
                 }
             }
             swShowNote.setOnClickListener { v: View? ->
