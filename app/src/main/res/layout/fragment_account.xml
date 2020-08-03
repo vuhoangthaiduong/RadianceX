@@ -48,12 +48,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/username"
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@{viewModel.currentUser.username}"
+                    android:text="@{viewModel.currentUser.firstName.concat(viewModel.currentUser.lastName)}"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 

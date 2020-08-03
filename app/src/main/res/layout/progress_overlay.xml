@@ -6,12 +6,9 @@
     android:alpha="0.4"
     android:animateLayoutChanges="true"
     android:background="@android:color/black"
-    android:clickable="true"
-    android:focusable="true"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <ProgressBar
-        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
