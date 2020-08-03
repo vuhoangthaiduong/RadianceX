@@ -66,6 +66,10 @@
     <string name="hone_your_skills_everyday">Hone your skills everyday</string>
     <string name="see_everything">See everything</string>
     <string name="note">Note</string>
-
+    <string name="sign_out_dialog_title">Sign out of RadianceX?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="sign_out">Sign out</string>
+    <string name="sign_out_of_radiancex">Sign out of RadianceX?</string>
 
 </resources>

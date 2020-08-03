@@ -11,25 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screen.LoginActivity">
+        <activity android:name="com.example.android.radiancex.ui.screen.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screen.RegisterActivity">
+        <activity android:name="com.example.android.radiancex.ui.screen.RegisterActivity">
         </activity>
-        <activity android:name=".screen.MainActivity"></activity>
+        <activity android:name="com.example.android.radiancex.ui.screen.MainActivity"></activity>
         <activity
-            android:name=".screen.AddNewEntryActivity"
-            android:parentActivityName=".screen.MainActivity" />
+            android:name="com.example.android.radiancex.ui.screen.AddNewEntryActivity"
+            android:parentActivityName="com.example.android.radiancex.ui.screen.MainActivity" />
         <activity
-            android:name=".screen.browse.BrowseActivity"
-            android:parentActivityName=".screen.MainActivity" />
+            android:name="com.example.android.radiancex.ui.screen.browse.BrowseActivity"
+            android:parentActivityName="com.example.android.radiancex.ui.screen.MainActivity" />
         <activity
-            android:name=".screen.LearnActivity"
-            android:parentActivityName=".screen.MainActivity" />
+            android:name="com.example.android.radiancex.ui.screen.LearnActivity"
+            android:parentActivityName="com.example.android.radiancex.ui.screen.MainActivity" />
     </application>
 
 </manifest>

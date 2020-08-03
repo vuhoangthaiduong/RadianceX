@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/login"
-        tools:context=".screen.RegisterActivity">
+        tools:context=".ui.screen.RegisterActivity">
 
         <Button
             android:id="@+id/btnSignIn"
@@ -17,11 +17,12 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="64dp"
             android:background="@drawable/btn_rounded"
+            android:stateListAnimator="@null"
             android:text="@string/sign_in"
             android:textSize="24sp"
+            style="?android:attr/borderlessButtonStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:stateListAnimator="@null"
             app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
         <TextView

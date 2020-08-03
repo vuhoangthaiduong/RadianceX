@@ -1,4 +1,4 @@
-package com.example.android.radiancex.screen
+package com.example.android.radiancex.ui.screen
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

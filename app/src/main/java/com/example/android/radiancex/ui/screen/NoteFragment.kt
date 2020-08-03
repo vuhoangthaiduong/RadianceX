@@ -1,4 +1,4 @@
-package com.example.android.radiancex.screen
+package com.example.android.radiancex.ui.screen
 
 import android.os.Build
 import androidx.lifecycle.ViewModelProviders

@@ -1,4 +1,4 @@
-package com.example.android.radiancex.screen
+package com.example.android.radiancex.ui.screen
 
 import android.app.Activity
 import android.content.Intent
@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.android.radiancex.R
 import com.example.android.radiancex.databinding.ActivityMainBinding
-import com.example.android.radiancex.screen.account.AccountFragment
+import com.example.android.radiancex.ui.screen.account.AccountFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 

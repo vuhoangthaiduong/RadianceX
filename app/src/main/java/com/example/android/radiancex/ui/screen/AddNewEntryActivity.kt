@@ -1,7 +1,5 @@
-package com.example.android.radiancex.screen
+package com.example.android.radiancex.ui.screen
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu

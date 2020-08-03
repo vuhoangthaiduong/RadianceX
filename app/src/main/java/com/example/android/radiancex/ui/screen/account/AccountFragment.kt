@@ -1,20 +1,23 @@
-package com.example.android.radiancex.screen.account
+package com.example.android.radiancex.ui.screen.account
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.android.radiancex.screen.LoginActivity
 import com.example.android.radiancex.R
 import com.example.android.radiancex.databinding.FragmentAccountBinding
+import com.example.android.radiancex.ui.screen.LoginActivity
 import com.example.android.radiancex.viewmodel.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
-import java.lang.Exception
+
 
 class AccountFragment : Fragment() {
 
@@ -28,6 +31,8 @@ class AccountFragment : Fragment() {
             val window: Window? = this.activity?.window
             window?.statusBarColor = ContextCompat.getColor(this.requireContext(), R.color.colorPrimary);
         }
+
+        val builder = AlertDialog.Builder(activity)
 
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
@@ -51,14 +56,22 @@ class AccountFragment : Fragment() {
             }
 
             btnLogout.setOnClickListener {
-                try {
-                    fAuth.signOut()
-                    val intent = Intent(context, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Toast.makeText(context, "Failed to log out", Toast.LENGTH_SHORT).show()
-                }
+                builder.setTitle(R.string.sign_out_dialog_title)
+                builder.setCancelable(false)
+                        .setPositiveButton("Sign out") { _, _ ->
+                            try {
+                                fAuth.signOut()
+                                val intent = Intent(context, LoginActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            } catch (e: Exception) {
+                                Toast.makeText(context, "Failed to log out", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        .setNegativeButton("No") { dialog, _ -> //  Action for 'NO' Button
+                            dialog.cancel()
+                        }
+                builder.create().show()
             }
         }
 

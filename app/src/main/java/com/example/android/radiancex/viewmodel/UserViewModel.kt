@@ -10,17 +10,9 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
     private var repository: UserRepository = UserRepository()
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    private val _currentUser: MutableLiveData<User>? = MutableLiveData()
-    val currentUser: LiveData<User>?
-        get() = _currentUser
+    val currentUser : LiveData<User>? = repository.getCurrentUser()
 
     lateinit var allUsers: LiveData<List<User>>
-
-    init {
-        if (_currentUser != null) {
-            _currentUser.value = getCurrentLoggedInUser()?.value
-        }
-    }
 
     fun getUser(userID: String): LiveData<User> {
         return repository.getUser(userID)

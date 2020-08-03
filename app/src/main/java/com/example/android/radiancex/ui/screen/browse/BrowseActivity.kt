@@ -1,4 +1,4 @@
-package com.example.android.radiancex.screen.browse
+package com.example.android.radiancex.ui.screen.browse
 
 import android.annotation.SuppressLint
 import android.os.Bundle

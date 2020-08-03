@@ -1,4 +1,4 @@
-package com.example.android.radiancex.screen.account
+package com.example.android.radiancex.ui.screen.account
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

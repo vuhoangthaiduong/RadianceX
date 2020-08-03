@@ -1,4 +1,4 @@
-package com.example.android.radiancex.screen
+package com.example.android.radiancex.ui.screen
 
 import android.app.Activity
 import android.content.Intent
@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android.radiancex.R
 import com.example.android.radiancex.databinding.FragmentLearnBinding
 import com.example.android.radiancex.viewmodel.SentenceViewModel
-import com.example.android.radiancex.screen.browse.BrowseActivity
+import com.example.android.radiancex.ui.screen.browse.BrowseActivity
 import com.google.android.material.snackbar.Snackbar
 
 class DictionaryFragment : Fragment() {

@@ -14,7 +14,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".screen.browse.BrowseActivity">
+        tools:context=".ui.screen.browse.BrowseActivity">
 
         <!-- A RecyclerView with some commonly used attributes -->
         <LinearLayout
